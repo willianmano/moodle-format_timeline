@@ -1,0 +1,58 @@
+<div class="card discuss" data-id="{{pid}}" data-course="{{course}}">
+    <div class="card-body">
+        <div class="post">
+            <div class="userimg">
+                <img src="{{{userpic}}}">
+            </div>
+            <div class="entry">
+                <div class="entry-content">
+                    <p class="name">{{firstname}} {{lastname}} <span class="small">{{humantimecreated}}</span></p>
+                    <p class="text">{{message}}</p>
+                </div>
+            </div>
+
+            {{#candelete}}
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="dropdownMenuButton-{{pid}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{#pix}}a/setting{{/pix}}</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{pid}}">
+                        <a class="dropdown-item delete-post" data-id="{{pid}}" href="#"><i class="fa fa-trash-o"></i> Excluir publicação</a>
+                    </div>
+                </div>
+            {{/candelete}}
+        </div>
+        {{#children}}
+            <div class="post">
+                <div class="userimg">
+                    <img src="{{{userpic}}}">
+                </div>
+                <div class="entry">
+                    <div class="entry-content">
+                        <p class="name">{{firstname}} {{lastname}}</p>
+                        <p class="text">{{message}}</p>
+                    </div>
+                </div>
+            </div>
+        {{/children}}
+
+        {{#cancommentonposts}}
+            <div class="add-comment">
+                {{#loggedinuserinfo}}
+                    <img src="{{{img}}}" class="userimg" alt="{{fullname}}">
+                {{/loggedinuserinfo}}
+
+                <div class="input-group">
+                    <input type="text"
+                           placeholder="{{#str}}writeacomment, format_timeline{{/str}}"
+                           title="{{#str}}writeacomment, format_timeline{{/str}}"
+                           class="form-control post-comment-input"
+                           name="post-comment">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary post-comment-btn" type="button">
+                            <i class="fa fa-commenting-o"></i> {{#str}}comment, format_timeline{{/str}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {{/cancommentonposts}}
+    </div>
+</div>

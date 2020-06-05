@@ -1,0 +1,279 @@
+/* Course header. */
+.format-timeline #editingonalert {
+    display: none;
+}
+
+.format-timeline.editing #editingonalert {
+    display: block;
+}
+
+.format-timeline .header-section,
+.format-timeline .filters-section {
+    background-color: #eef5f9;
+}
+
+.format-timeline .filters-section {
+    margin-top: .5rem;
+    text-align: right;
+}
+
+.format-timeline .filters-section a {
+    text-decoration: none !important;
+    color: #373a3c;
+}
+
+.format-timeline .filters-section a,
+.format-timeline .filters-section .dropdown {
+    display: inline-block;
+    margin-left: .5rem;
+}
+
+.format-timeline .userwelcome img {
+    max-width: 50px;
+    margin-right: .5rem;
+    border-radius: 50%;
+}
+
+.format-timeline .userwelcome p {
+    display: inline-block;
+}
+
+.format-timeline .buttons .btn {
+    text-decoration: none;
+    color: #ffffff;
+    margin-right: .5rem;
+}
+
+.format-timeline .buttons {
+    margin-top: 1rem;
+}
+
+.format-timeline .buttons .addresourcemodchooser a {
+    text-decoration: none !important;
+    color: #ffffff;
+}
+
+.format-timeline .buttons a:last-of-type {
+    margin-right: 0;
+}
+
+/* Timeline posts. */
+.format-timeline .discuss {
+    margin-top: .5rem;
+    border-style: dashed;
+}
+
+.format-timeline .discuss .post {
+    margin-top: .5rem;
+    padding-left: 42px;
+    display: flex;
+    flex-direction: row;
+}
+
+.format-timeline .discuss .post:first-of-type {
+    padding-left: 0;
+    margin-top: 0;
+}
+
+.format-timeline .discuss .userimg {
+    align-self: flex-start;
+    position: relative;
+    display: block;
+}
+
+.format-timeline .discuss .userimg img {
+    display: inline;
+    width: 42px;
+    border-radius: 50%;
+    border: 1px solid #ededed;
+}
+
+.format-timeline .discuss .entry {
+    flex: 1;
+    padding-left: .4rem;
+}
+
+.format-timeline .discuss .entry .entry-content {
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    background-color: #ededed;
+    display: inline-block;
+}
+
+.format-timeline .discuss .entry .entry-content .name {
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+.format-timeline .discuss .entry .entry-content .name .small {
+    font-size: 70%;
+    margin-bottom: 0;
+    border: 1px solid #c3c3c3;
+    border-radius: 20px;
+    padding: 0 4px;
+}
+
+.format-timeline .discuss .entry .entry-content .text {
+    margin-bottom: 0;
+}
+
+.format-timeline .discuss .add-comment {
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid #ededed;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+}
+
+.format-timeline .discuss .add-comment .userimg {
+    border-radius: 50%;
+    height: calc(1.5em + .75rem + 2px);
+    align-self: flex-start;
+    position: relative;
+    display: block;
+    border: 1px solid #ededed;
+    margin-right: .5rem;
+}
+
+.format-timeline .discuss .add-comment input {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.format-timeline .discuss .add-comment .input-group-append .btn {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.format-timeline .discuss .fadeIn {
+    -webkit-animation: format-timeline_fadein 1s ease-in-out;
+    -moz-animation: format-timeline_fadein 1s ease-in-out;
+    -o-animation: format-timeline_fadein 1s ease-in-out;
+    animation: format-timeline_fadein 1s ease-in-out;
+}
+
+/* Some animations. */
+@-webkit-keyframes format-timeline_fadein {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-moz-keyframes format-timeline_fadein {
+    0% { opacity: 0;}
+    100% { opacity: 1; }
+}
+@-o-keyframes format-timeline_fadein {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes format-timeline_fadein {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Activity list. */
+.format-timeline div.timeline {
+    list-style: none;
+    padding-left: 0;
+}
+
+.format-timeline div.timeline ul.section {
+    margin: 0;
+    padding-left: 0;
+}
+
+.format-timeline div.timeline ul.section .activity {
+    margin: .5rem 0 0 0;
+    padding: .5rem 1rem;
+    border: 1px solid #d7dfe3;
+    border-left: 4px solid #1177d1;
+}
+
+.format-timeline div.timeline ul.section .activity.modtype_book,
+.format-timeline div.timeline ul.section .activity.modtype_resource,
+.format-timeline div.timeline ul.section .activity.modtype_folder,
+.format-timeline div.timeline ul.section .activity.modtype_imscp,
+.format-timeline div.timeline ul.section .activity.modtype_page,
+.format-timeline div.timeline ul.section .activity.modtype_url {
+    border-left: 4px solid #5bc0de;
+}
+
+.format-timeline div.timeline ul.section .activity.modtype_label {
+    border: 1px solid #d7dfe3;
+    position: relative;
+}
+
+.format-timeline div.timeline ul.section .activity.ishidden {
+    border-left: 4px solid #868e96;
+    background-color: rgba(0, 0, 0, .05);;
+}
+
+.format-timeline div.timeline ul.section .activity.ishidden a {
+    color: #868e96;
+}
+
+.format-timeline div.timeline ul.section .activity.ishidden .activityicon {
+    opacity: .5;
+}
+
+.format-timeline div.timeline ul.section .activity .activity-header {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+
+.format-timeline div.timeline ul.section .activity .activity-header .activity-info {
+    flex: 1;
+    align-self: flex-start;
+    position: relative;
+    display: block;
+}
+
+.format-timeline div.timeline ul.section .activity .activity-header .activity-info .activity-name {
+    margin-bottom: 0;
+}
+
+.format-timeline div.timeline ul.section .activity .activity-header .activity-info .activity-timecreated {
+    font-size: 80%;
+    font-weight: 400;
+    margin-bottom: .5rem;
+}
+
+.format-timeline div.timeline ul.section .activity .activity-header .editicons a {
+    text-decoration: none !important;
+}
+
+.format-timeline div.timeline ul.section .activity .activity-header .editicons a .icon {
+    margin-right: .5rem;
+}
+
+.format-timeline div.timeline ul.section .activity .activity-header .editicons .action-menu-item {
+    display: none;
+}
+
+.format-timeline div.timeline ul.section .activity img.activityicon {
+    height: 48px;
+    width: 48px;
+    vertical-align: middle;
+    margin-right: 1rem;
+}
+
+.format-timeline div.timeline ul.section .activity .actions img.icon {
+    margin-right: 0;
+}
+
+.format-timeline div.timeline ul.section .activity .availabilityinfo {
+    margin-left: 0;
+    border-top: 1px solid #d7dfe3;
+}
+
+.format-timeline div.timeline ul.section .activity .availabilityinfo ul {
+    margin-left: 1rem;
+}
+
+.format-timeline div.timeline ul.section .activity .metahtml {
+    text-align: right;
+}
+
+.format-timeline div.timeline ul.section .activity .metahtml .badge {
+    margin-left: .5rem;
+}

@@ -1,0 +1,38 @@
+{{#printcontent}}
+    <div class="{{type}} modtype_{{modname}} {{^visible}}ishidden{{/visible}}">
+        {{{content}}}
+
+        <div class="actions">
+            {{{editicons}}}
+        </div>
+    </div>
+{{/printcontent}}
+{{^printcontent}}
+    <li class="{{type}} {{modname}} modtype_{{modname}} {{^visible}}ishidden{{/visible}}">
+        <div class="activity-header">
+            <div class="activity-info">
+                <p class="activity-name">{{modfullname}}</p>
+                <p class="activity-timecreated"><b>{{#str}}postedon, format_timeline{{/str}}</b>{{humantimecreated}}</p>
+            </div>
+
+            <div class="editicons">
+                {{{editicons}}}
+            </div>
+        </div>
+
+        <div>
+            <div class="activityinstance">
+                <a href="{{{url}}}">
+                    <img src="{{{iconurl}}}" class="iconlarge activityicon" role="presentation" aria-hidden="true">
+                    <span class="instancename">{{name}}</span>
+                </a>
+            </div>
+
+            <div class="actions">
+                {{{completionbox}}}
+            </div>
+
+            {{{availability}}}
+        </div>
+    </li>
+{{/printcontent}}

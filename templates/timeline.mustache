@@ -1,0 +1,58 @@
+<div id="editingonalert" class="alert alert-danger mb-2" role="alert">
+    <h4 class="alert-heading"><i class="fa fa-exclamation-circle"></i> A edição do curso está habilitada</h4>
+    <p class="m-0">Não esqueça de desabilitá-la após concluir todas as alterações.</p>
+</div>
+
+{{#hasactions}}
+    <div class="header-section card">
+        <div class="card-body">
+            {{#userinfo}}
+                <div class="userwelcome">
+                    <img src="{{{img}}}" alt="{{fullname}}">
+                    <p>{{#str}}wanttodo, format_timeline{{/str}}</p>
+                </div>
+            {{/userinfo}}
+            <div class="buttons">
+                {{{openactivitychoooser}}}
+
+                {{#canaddpost}}
+                    <a href="#" id="create-post-btn" data-course="{{courseid}}" class="btn btn-primary"><i class="fa fa-pencil"></i> {{#str}}createpost, format_timeline{{/str}}</a>
+                {{/canaddpost}}
+            </div>
+        </div>
+    </div>
+{{/hasactions}}
+
+<div class="card filters-section">
+    <div class="card-body">
+
+        {{#filterlinks}}
+            {{{orderlink}}}
+
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle" id="filter-activities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{#pix}}i/filter{{/pix}} {{#str}}filter{{/str}}</a>
+                <div class="dropdown-menu" aria-labelledby="filter-activities">
+                    <a class="dropdown-item" href="{{{showall}}}"><i class="fa fa-list"></i> {{#str}}showall, format_timeline{{/str}}</a>
+                    <a class="dropdown-item" href="{{{onlyactivities}}}"><i class="fa fa-check-square-o"></i> {{#str}}onlyactivities, format_timeline{{/str}}</a>
+                    <a class="dropdown-item" href="{{{onlyposts}}}"><i class="fa fa-comments-o"></i> {{#str}}onlyposts, format_timeline{{/str}}</a>
+                </div>
+            </div>
+        {{/filterlinks}}
+    </div>
+</div>
+
+<div class="timeline">
+    <ul class="section img-text">
+        {{{timelineitems}}}
+    </ul>
+</div>
+
+{{#js}}
+    require(['format_timeline/createpost', 'format_timeline/createcomment', 'format_timeline/deletepost'], function(createpost, createcomment, deletepost) {
+        createpost.init();
+
+        createcomment.init();
+
+        deletepost.init();
+    });
+{{/js}}
