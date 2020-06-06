@@ -34,7 +34,7 @@ class user {
 
         return [
             'img' => $userimg->get_url($page),
-            'fullname' => $user->firstname . ' ' . $user->lastname
+            'fullname' => fullname($user)
         ];
     }
 

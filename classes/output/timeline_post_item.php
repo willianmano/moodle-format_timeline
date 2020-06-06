@@ -53,6 +53,9 @@ class timeline_post_item implements templatable, renderable {
         // Can user delete the post?
         $this->item->candelete = user::can_delete_post($this->item);
 
+        // Get the user fullname.
+        $this->item->fullname = fullname($this->item);
+
         if ($this->item->children) {
             foreach ($this->item->children as $key => $child) {
                 $this->item->children[$key]->humantimecreated = userdate($child->timecreated);
