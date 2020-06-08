@@ -31,6 +31,7 @@ use external_value;
 use external_single_structure;
 use external_function_parameters;
 use context_course;
+use format_timeline\notifications;
 use format_timeline\user;
 
 class posts extends external_api {
@@ -51,6 +52,7 @@ class posts extends external_api {
 
         $post = (object)$post;
 
+        $course = $DB->get_record('course', ['id' => $post->course], '*', MUST_EXIST);
         $context = context_course::instance($post->course);
 
         if (!$post->parent) {
@@ -72,14 +74,18 @@ class posts extends external_api {
             }
         }
 
+        $post->message = trim($post->message);
         $post->userid = $USER->id;
         $post->timecreated = time();
         $post->timemodified = time();
 
-        $DB->insert_record('format_timeline_posts', $post);
+        $postid = $DB->insert_record('format_timeline_posts', $post);
 
         if (!$post->parent) {
             \core\notification::success(get_string('postcreated', 'format_timeline'));
+
+            $notification = new notifications($course->id, $course->fullname, $postid, $context);
+            $notification->send();
         }
 
         return [

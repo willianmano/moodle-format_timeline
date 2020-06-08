@@ -27,6 +27,7 @@ $string['pluginname'] = 'Timeline';
 $string['hidefromothers'] = 'Hide timeline';
 $string['showfromothers'] = 'Show timeline';
 $string['wanttodo'] = 'What do you want to do, teacher?';
+$string['messageprovider:timelineposts'] = 'Notification of new posts from Timeline course format';
 $string['createpost'] = 'Create a new post';
 $string['createpost_validator_message'] = 'The post must be at least 10 characters long.';
 $string['postedon'] = 'Posted on:';
@@ -43,3 +44,8 @@ $string['onlyposts'] = 'Only posts';
 $string['orderdesc'] = 'Show older first';
 $string['orderasc'] = 'Show newest first';
 $string['privacy:metadata'] = 'The Timeline Social format plugin does not store any personal data.';
+
+$string['message_contextname'] = 'Timeline posts';
+$string['message_newpostinthecourse'] = 'There is a new post in your course';
+$string['message_newpostinacourse'] = 'There is a new post in a course';
+$string['message_clicktoaccesspost'] = 'Click here to access the post';

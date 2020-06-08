@@ -27,6 +27,7 @@ $string['pluginname'] = 'Linha do tempo';
 $string['hidefromothers'] = 'Ocultar linha do tempo';
 $string['showfromothers'] = 'Exibir linha do tempo';
 $string['wanttodo'] = 'O que você deseja fazer, professor?';
+$string['messageprovider:timelineposts'] = 'Notificação de publicações do formato de curso Linha do Tempo';
 $string['createpost'] = 'Criar uma nova publicação';
 $string['createpost_validator_message'] = 'A publicação deve ter pelo menos 10 caracteres.';
 $string['postedon'] = 'Postado em:';
@@ -43,3 +44,8 @@ $string['onlyposts'] = 'Apenas publicações';
 $string['orderdesc'] = 'Exibir mais antigos primeiro';
 $string['orderasc'] = 'Exibir mais novos primeiro';
 $string['privacy:metadata'] = 'O formato Linha do tempo social não guarda dados pessoais.';
+
+$string['message_contextname'] = 'Publicações da timeline';
+$string['message_newpostinthecourse'] = 'Tem uma nova publicação no seu curso.';
+$string['message_newpostinacourse'] = 'Tem uma nova publicação em um curso';
+$string['message_clicktoaccesspost'] = 'Clique aqui para acessar a publicação';

@@ -15,16 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Timeline course format. Defines message providers (types of messages being sent)
  *
- * @package    format
- * @subpackage timeline
+ * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+$messageproviders = array(
+    'timelineposts' => array(
+        'defaults' => array(
+            'popup' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN,
+            'email' => MESSAGE_PERMITTED
+        ),
+    )
+);
 
-defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020060400;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2019111200;        // Requires this Moodle version.
-$plugin->component = 'format_timeline';    // Full name of the plugin (used for diagnostics).
+
