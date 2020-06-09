@@ -27,7 +27,7 @@ namespace format_topics\privacy;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Privacy Subsystem for format_topics implementing null_provider.
+ * Privacy Subsystem for format_timeline implementing null_provider.
  *
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

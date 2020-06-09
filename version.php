@@ -25,6 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020060400;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2019111200;        // Requires this Moodle version.
-$plugin->component = 'format_timeline';    // Full name of the plugin (used for diagnostics).
+$plugin->version   = 2020060400;
+$plugin->requires  = 2019111200;
+$plugin->component = 'format_timeline';
+$plugin->maturity  = MATURITY_BETA;
+$plugin->release   = '0.0.5';

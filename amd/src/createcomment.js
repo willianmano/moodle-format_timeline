@@ -55,7 +55,7 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
 
         var discussdiv = target.closest('.discuss');
         if (discussdiv.length === 0 || discussdiv.length > 1) {
-            this.showToast('error', 'Erro ao tentar localizar a discussão para este comentário      .');
+            this.showToast('error', 'Erro ao tentar localizar a discussão para este comentário.');
 
             return;
         }
@@ -113,10 +113,10 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
         var userimg = discussdiv.find('.add-comment .userimg').clone();
         var userfullname = userimg.attr('alt');
 
-        $("<div class='post fadeIn'><div class='userimg'>" + $('<div/>').append(userimg).html() + "</div>"+
-          "<div class='entry'><div class='entry-content'>"+
-          "<p class='name'>"+userfullname+"</p>"+
-          "<p class='text'>"+value+"</p>"+
+        $("<div class='post fadeIn'><div class='userimg'>" + $('<div/>').append(userimg).html() + "</div>" +
+          "<div class='entry'><div class='entry-content'>" +
+          "<p class='name'>" + userfullname + "</p>" +
+          "<p class='text'>" + value + "</p>" +
           "</div></div></div>").insertBefore(discussdiv.find('.add-comment'));
     };
 

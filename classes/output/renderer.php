@@ -19,7 +19,7 @@
  *
  * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_timeline\output;
@@ -30,39 +30,11 @@ use plugin_renderer_base;
 use renderable;
 
 /**
- * Renderer for the kickstart format.
+ * Renderer for the timeline format.
  *
- * @copyright 2019 bdecent gmbh <https://bdecent.de>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class renderer extends plugin_renderer_base {
-    /**
-     * Overrides the parent so that templatable widgets are handled even without their explicit render method.
-     *
-     * @param renderable $widget
-     * @return string
-     * @throws \moodle_exception
-     */
-//    public function render(renderable $widget) {
-//
-//        $namespacedclassname = get_class($widget);
-//        $plainclassname = preg_replace('/^.*\\\/', '', $namespacedclassname);
-//        $rendermethod = 'render_'.$plainclassname;
-//
-//        if (method_exists($this, $rendermethod)) {
-//            // Explicit rendering method exists, fall back to the default behaviour.
-//            return parent::render($widget);
-//        }
-//
-//        $interfaces = class_implements($namespacedclassname);
-//
-//        if (isset($interfaces['templatable'])) {
-//            // Default implementation of template-based rendering.
-//            $data = $widget->export_for_template($this);
-//            return parent::render_from_template('format_timeline/'.$plainclassname, $data);
-//
-//        } else {
-//            return parent::render($widget);
-//        }
-//    }
+
 }

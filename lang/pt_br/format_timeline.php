@@ -44,7 +44,8 @@ $string['onlyposts'] = 'Apenas publicações';
 $string['orderdesc'] = 'Exibir mais antigos primeiro';
 $string['orderasc'] = 'Exibir mais novos primeiro';
 $string['privacy:metadata'] = 'O formato Linha do tempo social não guarda dados pessoais.';
-
+$string['courseeditingison'] = 'A edição do curso está habilitada';
+$string['courseeditingisonalert'] = 'Não esqueça de desabilitá-la após concluir todas as alterações.';
 $string['message_contextname'] = 'Publicações da timeline';
 $string['message_newpostinthecourse'] = 'Tem uma nova publicação no seu curso.';
 $string['message_newpostinacourse'] = 'Tem uma nova publicação em um curso';

@@ -27,12 +27,13 @@ defined('MOODLE_INTERNAL') || die;
 require_once($CFG->dirroot . '/course/format/lib.php');
 
 /**
- * Main class for the Timeline Social course format
+ * Main class for the Timeline course format
  */
 class format_timeline extends format_base
 {
     /**
      * Returns true if this course format uses sections
+     *
      * @return bool
      */
     public function uses_sections() {

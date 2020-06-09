@@ -19,7 +19,7 @@
  *
  * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_timeline\api;
@@ -34,7 +34,18 @@ use context_course;
 use format_timeline\notifications;
 use format_timeline\user;
 
+/**
+ * Class posts
+ *
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class posts extends external_api {
+    /**
+     * Create post parameters
+     *
+     * @return external_function_parameters
+     */
     public static function create_parameters() {
         return new external_function_parameters([
             'post' => new external_single_structure([
@@ -45,6 +56,18 @@ class posts extends external_api {
         ]);
     }
 
+    /**
+     * Create post method
+     *
+     * @param $post
+     *
+     * @return array
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \invalid_parameter_exception
+     * @throws \moodle_exception
+     */
     public static function create($post) {
         global $DB, $USER;
 
@@ -94,6 +117,11 @@ class posts extends external_api {
         ];
     }
 
+    /**
+     * Create post return fields
+     *
+     * @return external_single_structure
+     */
     public static function create_returns() {
         return new external_single_structure(
             array(
@@ -103,6 +131,11 @@ class posts extends external_api {
         );
     }
 
+    /**
+     * Delete post parameters
+     *
+     * @return external_function_parameters
+     */
     public static function delete_parameters() {
         return new external_function_parameters([
             'post' => new external_single_structure([
@@ -111,6 +144,18 @@ class posts extends external_api {
         ]);
     }
 
+    /**
+     * Delete post method
+     *
+     * @param $post
+     *
+     * @return array
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \invalid_parameter_exception
+     * @throws \moodle_exception
+     */
     public static function delete($post) {
         global $DB, $USER;
 
@@ -134,6 +179,11 @@ class posts extends external_api {
         ];
     }
 
+    /**
+     * Delete post return fields
+     *
+     * @return external_single_structure
+     */
     public static function delete_returns() {
         return new external_single_structure(
             array(

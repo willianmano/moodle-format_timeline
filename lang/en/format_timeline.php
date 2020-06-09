@@ -44,7 +44,8 @@ $string['onlyposts'] = 'Only posts';
 $string['orderdesc'] = 'Show older first';
 $string['orderasc'] = 'Show newest first';
 $string['privacy:metadata'] = 'The Timeline Social format plugin does not store any personal data.';
-
+$string['courseeditingison'] = 'The course editing is on';
+$string['courseeditingisonalert'] = 'Don\'t forget to disable it after completing all the changes.';
 $string['message_contextname'] = 'Timeline posts';
 $string['message_newpostinthecourse'] = 'There is a new post in your course';
 $string['message_newpostinacourse'] = 'There is a new post in a course';

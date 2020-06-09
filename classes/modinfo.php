@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Timeline Social course format.
+ * Timeline Social module info.
  *
  * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_timeline;
@@ -27,65 +27,91 @@ namespace format_timeline;
 use cm_info;
 use moodle_url;
 
+/**
+ * Mod info class.
+ *
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class modinfo {
+    /** @var int Curse module ID. */
     public $cmid;
+    /** @var int The module instance. */
     public $instanceid;
+    /** @var string The instance name. */
     public $name;
+    /** @var string Module type. */
     public $type = 'activity';
+    /** @var string Module name. */
     public $modname;
+    /** @var string Module fullname. */
     public $modfullname;
+    /** @var string Module URL. */
     public $url;
+    /** @var string Icon URL. */
     public $iconurl;
+    /** @var boolean Course module visibility. */
     public $visible;
+    /** @var string Time created for humans. */
     public $humantimecreated;
+    /** @var int Time created. */
     public $timecreated;
+    /** @var int Time modified. */
     public $timemodified;
+    /** @var string Edit icons. */
     public $editicons;
+    /** @var string Completion box. */
     public $completionbox;
+    /** @var boolean Course module availability. */
     public $availability;
+    /** @var boolean Course content is printable ex. label. */
     public $printcontent = false;
+    /** @var string Content. */
     public $content = null;
 
-    public function __construct(cm_info $cm_info, $editicons = null, $completionbox = null, $availability = null) {
+    /**
+     * Constructor.
+     *
+     * @param cm_info $cminfo
+     * @param null $editicons
+     * @param null $completionbox
+     * @param null $availability
+     */
+    public function __construct(cm_info $cminfo, $editicons = null, $completionbox = null, $availability = null) {
         $this->editicons = $editicons;
         $this->completionbox = $completionbox;
         $this->availability = $availability;
-        $this->get_module_metadata($cm_info);
+        $this->get_module_metadata($cminfo);
     }
 
-    public function get_module_metadata(cm_info $cm_info) {
+    /**
+     * Get coure module medatada
+     *
+     * @param cm_info $cminfo
+     *
+     * @throws \dml_exception
+     * @throws \moodle_exception
+     */
+    public function get_module_metadata(cm_info $cminfo) {
         global $DB;
 
-        $moddb = $DB->get_record($cm_info->modname, ['id' => $cm_info->instance], '*', MUST_EXIST);
+        $moddb = $DB->get_record($cminfo->modname, ['id' => $cminfo->instance], '*', MUST_EXIST);
 
-        $this->cmid = $cm_info->id;
-        $this->instanceid = $cm_info->instance;
-        $this->name = $cm_info->name;
-        $this->modname = $cm_info->modname;
-        $this->modfullname = $cm_info->modfullname->out();
+        $this->cmid = $cminfo->id;
+        $this->instanceid = $cminfo->instance;
+        $this->name = $cminfo->name;
+        $this->modname = $cminfo->modname;
+        $this->modfullname = $cminfo->modfullname->out();
         $this->url = new moodle_url('/mod/' . $this->modname . '/view.php', ['id' => $this->cmid]);
-        $this->iconurl = $cm_info->get_icon_url();
-        $this->visible = $cm_info->visible;
-        $this->humantimecreated = userdate($cm_info->added);
-        $this->timecreated = $cm_info->added;
+        $this->iconurl = $cminfo->get_icon_url();
+        $this->visible = $cminfo->visible;
+        $this->humantimecreated = userdate($cminfo->added);
+        $this->timecreated = $cminfo->added;
         $this->timemodified = $moddb->timemodified;
 
         if ($this->modname == 'label') {
             $this->printcontent = true;
-            $this->content = $cm_info->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
+            $this->content = $cminfo->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
         }
-
-//        switch ($cm_info->modname) {
-//            case 'book':
-//                $this->timecreated = $moddb->timecreated;
-//                break;
-//            case 'resource':
-//            case 'folder':
-//            case 'imscp':
-//            case 'label':
-//            case 'page':
-//            case 'url':
-//                $this->timecreated = $moddb->timemodified; // These resources doen't have the timecreated field.
-//        }
     }
 }

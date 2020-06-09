@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Timeline Social course format.
+ * Timeline post item renderer.
  *
  * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_timeline\output;
@@ -29,17 +29,40 @@ use templatable;
 use renderable;
 use renderer_base;
 
+/**
+ * Timeline post renderer class.
+ *
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class timeline_post_item implements templatable, renderable {
+    /** @var \stdClass Curse post. */
     protected $item;
+    /** @var \stdClass The current course page. */
     protected $page;
+    /** @var \stdClass The current logged in user. */
     protected $loggedinuserinfo;
 
+    /**
+     * Constructor.
+     *
+     * @param $post
+     * @param $page
+     * @param $loggedinuserinfo
+     */
     public function __construct($post, $page, $loggedinuserinfo) {
         $this->item = $post;
         $this->page = $page;
         $this->loggedinuserinfo = $loggedinuserinfo;
     }
 
+    /**
+     * Export method
+     *
+     * @param renderer_base $output
+     *
+     * @return array|\stdClass
+     */
     public function export_for_template(renderer_base $output) {
         // User image who created the post.
         $this->item->userpic = user::get_userpic($this->item, $this->page);

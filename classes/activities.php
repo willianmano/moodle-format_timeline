@@ -19,7 +19,7 @@
  *
  * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_timeline;
@@ -31,7 +31,24 @@ use action_menu_link;
 use action_link;
 use pix_icon;
 
+/**
+ * Activities class.
+ *
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class activities {
+    /**
+     * Get all course activities
+     *
+     * @param $course
+     * @param $courserenderer
+     *
+     * @return array
+     *
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
     public static function get_course_activities($course, $courserenderer) {
         $modinfo = get_fast_modinfo($course);
 
@@ -72,11 +89,12 @@ class activities {
      * @param action_link[] $actions Array of action_link objects
      * @param $courserenderer The course renderer
      * @param cm_info $mod The module we are displaying actions for.
+     *
      * @return string
+     *
+     * @throws \coding_exception
      */
     public static function course_section_cm_edit_actions($actions, $courserenderer, cm_info $mod = null) {
-        global $CFG;
-
         if (empty($actions)) {
             return '';
         }

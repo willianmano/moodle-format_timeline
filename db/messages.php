@@ -21,6 +21,9 @@
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
+
 $messageproviders = array(
     'timelineposts' => array(
         'defaults' => array(
@@ -29,6 +32,3 @@ $messageproviders = array(
         ),
     )
 );
-
-
-

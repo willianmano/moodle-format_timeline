@@ -15,16 +15,31 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Timeline Social course format.
+ * Timeline posts class.
  *
  * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_timeline;
 
+/**
+ * Posts class.
+ *
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class posts {
+    /**
+     * Get all available course posts
+     *
+     * @param $courseid
+     *
+     * @return array
+     *
+     * @throws \dml_exception
+     */
     public static function get_course_posts($courseid) {
         global $DB;
 
@@ -52,6 +67,15 @@ class posts {
         return $posts;
     }
 
+    /**
+     * Get post children
+     *
+     * @param $parentid
+     *
+     * @return array|null
+     *
+     * @throws \dml_exception
+     */
     public static function get_post_children($parentid) {
         global $DB;
 

@@ -1,17 +1,56 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Timeline Social notifications.
+ *
+ * @package    format_timeline
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 namespace format_timeline;
 
 use core\message\message;
-
 use moodle_url;
 
+/**
+ * Notifications class.
+ *
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class notifications {
+    /** @var int The course ID. */
     public $courseid;
+    /** @var string The course name. */
     public $coursename;
+    /** @var int The post ID. */
     public $postid;
+    /** @var \stdClass Course context. */
     public $context;
 
+    /**
+     * Constructor.
+     *
+     * @param $courseid
+     * @param $coursename
+     * @param $postid
+     * @param $context
+     */
     public function __construct($courseid, $coursename, $postid, $context) {
         $this->courseid = $courseid;
         $this->coursename = $coursename;
@@ -19,6 +58,11 @@ class notifications {
         $this->context = $context;
     }
 
+    /**
+     * Get the list of users to be notifiable
+     *
+     * @return array
+     */
     protected function get_users_to_notify() {
         $users = get_enrolled_users($this->context);
 
@@ -29,6 +73,14 @@ class notifications {
         return $users;
     }
 
+    /**
+     * Get the notification message data
+     *
+     * @return message
+     *
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
     protected function get_message_data() {
         global $USER;
 
@@ -55,6 +107,14 @@ class notifications {
         return $message;
     }
 
+    /**
+     * Send the message
+     *
+     * @return bool
+     *
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
     public function send() {
         $users = $this->get_users_to_notify();
 

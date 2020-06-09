@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Timeline Social course format.
+ * Timeline course module item.
  *
  * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace format_timeline\output;
@@ -29,13 +29,32 @@ use renderable;
 use renderer_base;
 use format_timeline\modinfo;
 
+/**
+ * Timeline course item renderer class.
+ *
+ * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class timeline_coursemodule_item implements templatable, renderable {
+    /** @var \stdClass Course module item to render. */
     protected $item;
 
+    /**
+     * Class constructor.
+     *
+     * @param modinfo $modinfo
+     */
     public function __construct(modinfo $modinfo) {
         $this->item = $modinfo;
     }
 
+    /**
+     * Export method
+     *
+     * @param renderer_base $output
+     *
+     * @return array|modinfo|\stdClass
+     */
     public function export_for_template(renderer_base $output) {
         return $this->item;
     }
