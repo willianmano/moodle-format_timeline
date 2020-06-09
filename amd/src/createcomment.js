@@ -77,8 +77,8 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
             }
         }]);
 
-        request[0].done(function() {
-            this.addCommentToDiscuss(discussdiv, value);
+        request[0].done(function(data) {
+            this.addCommentToDiscuss(discussdiv, data.message);
         }.bind(this)).fail(function(error) {
             var message = error.message;
 

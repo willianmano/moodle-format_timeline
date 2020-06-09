@@ -117,6 +117,10 @@
     margin-bottom: 0;
 }
 
+.format-timeline .discuss .entry .entry-content .text a {
+    font-weight: 700;
+}
+
 .format-timeline .discuss .add-comment {
     display: flex;
     flex-direction: row;

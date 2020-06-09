@@ -33,6 +33,8 @@ use external_function_parameters;
 use context_course;
 use format_timeline\notifications;
 use format_timeline\user;
+use moodle_url;
+use html_writer;
 
 /**
  * Class posts
@@ -102,6 +104,28 @@ class posts extends external_api {
         $post->timecreated = time();
         $post->timemodified = time();
 
+        // Handle the mentions.
+        $matches = [];
+        preg_match_all('/@(.*?)@/s', $post->message, $matches);
+        if (!empty($matches[0])) {
+            $userstonotifymention = [];
+
+            for ($i = 0; $i < count($matches[0]); $i++) {
+                $user = user::getall_by_name($matches[1][$i], $context);
+
+                if ($user) {
+                    $user = current($user);
+
+                    $userprofilelink = new moodle_url('/user/view.php',  ['id' => $user->id, 'course' => $course->id]);
+                    $userprofilelink = html_writer::link($userprofilelink->out(false), fullname($user));
+
+                    $post->message = str_replace($matches[0][$i], $userprofilelink, $post->message);
+
+                    $userstonotifymention[] = $user->id;
+                }
+            }
+        }
+
         $postid = $DB->insert_record('format_timeline_posts', $post);
 
         if (!$post->parent) {
@@ -109,11 +133,16 @@ class posts extends external_api {
 
             $notification = new notifications($course->id, $course->fullname, $postid, $context);
             $notification->send();
+
+            return [
+                'status' => 'ok',
+                'message' => get_string('postcreated', 'format_timeline')
+            ];
         }
 
         return [
             'status' => 'ok',
-            'message' => get_string('postcreated', 'format_timeline')
+            'message' => $post->message
         ];
     }
 
@@ -126,7 +155,7 @@ class posts extends external_api {
         return new external_single_structure(
             array(
                 'status' => new external_value(PARAM_TEXT, 'Operation status'),
-                'message' => new external_value(PARAM_TEXT, 'Return message')
+                'message' => new external_value(PARAM_RAW, 'Return message')
             )
         );
     }

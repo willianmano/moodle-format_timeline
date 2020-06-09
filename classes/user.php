@@ -153,7 +153,13 @@ class user {
 
         $params = array_merge($searchparams, $enrolledparams, $sortparams);
 
-        return $DB->get_records_sql($sql, $params, 0, 10);
+        $users = $DB->get_records_sql($sql, $params, 0, 10);
+
+        if (!$users) {
+            return false;
+        }
+
+        return array_values($users);
     }
 
     /**
