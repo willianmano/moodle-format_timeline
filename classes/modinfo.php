@@ -24,6 +24,8 @@
 
 namespace format_timeline;
 
+defined('MOODLE_INTERNAL') || die();
+
 use cm_info;
 use moodle_url;
 

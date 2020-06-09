@@ -277,3 +277,56 @@
 .format-timeline div.timeline ul.section .activity .metahtml .badge {
     margin-left: .5rem;
 }
+
+/* Mentions */
+.format-timeline .tribute-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: auto;
+    max-height: 300px;
+    max-width: 500px;
+    overflow: auto;
+    display: block;
+    z-index: 999999;
+}
+
+.format-timeline .tribute-container ul {
+    margin: 0;
+    margin-top: 2px;
+    padding: 0;
+    list-style: none;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.format-timeline .tribute-container li {
+    padding: .75rem .5rem;
+    cursor: pointer;
+}
+
+.format-timeline .tribute-container li img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: .5rem;
+}
+
+.format-timeline .tribute-container li.highlight {
+    color: #ffffff !important;
+    background-color: #1177d1;
+}
+
+.format-timeline .tribute-container li span {
+    font-weight: bold;
+}
+
+.format-timeline .tribute-container li.no-match {
+    cursor: default;
+}
+
+.format-timeline .tribute-container .menu-highlighted {
+    font-weight: bold;
+}

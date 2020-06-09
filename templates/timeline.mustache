@@ -87,12 +87,20 @@
 </div>
 
 {{#js}}
-    require(['format_timeline/createpost', 'format_timeline/createcomment', 'format_timeline/deletepost', 'format_timeline/fixanchoroffset'], function(createpost, createcomment, deletepost, fixanchoroffset) {
+    require([
+        'format_timeline/createpost',
+        'format_timeline/createcomment',
+        'format_timeline/deletepost',
+        'format_timeline/tribute_init',
+        'format_timeline/fixanchoroffset'],
+    function(createpost, createcomment, deletepost, tributeinit, fixanchoroffset) {
         createpost.init();
 
         createcomment.init();
 
         deletepost.init();
+
+        tributeinit.init();
 
         fixanchoroffset.init();
     });

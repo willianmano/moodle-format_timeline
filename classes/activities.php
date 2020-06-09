@@ -24,6 +24,8 @@
 
 namespace format_timeline;
 
+defined('MOODLE_INTERNAL') || die();
+
 use completion_info;
 use cm_info;
 use action_menu;

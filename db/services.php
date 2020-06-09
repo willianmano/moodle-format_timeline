@@ -40,5 +40,13 @@ $functions = [
         'description' => 'Deletes a post',
         'type' => 'write',
         'ajax' => true
+    ],
+    'format_timeline_enrolledusers' => [
+        'classname' => 'format_timeline\api\users',
+        'classpath' => 'course/format/timeline/classes/api/users.php',
+        'methodname' => 'enrolledusers',
+        'description' => 'Get the list of users enrolled in a course',
+        'type' => 'read',
+        'ajax' => true
     ]
 ];

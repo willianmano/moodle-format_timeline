@@ -24,7 +24,10 @@
 
 namespace format_timeline;
 
+defined('MOODLE_INTERNAL') || die();
+
 use user_picture;
+use context_course;
 
 /**
  * User info class.
@@ -122,5 +125,83 @@ class user {
      */
     public static function can_comment_on_post($context, $user = null) {
         return is_enrolled($context, $user) || is_siteadmin($user);
+    }
+
+    /**
+     * Get all users enrolled in a course by name
+     *
+     * @param string $name
+     * @param context_course $context
+     *
+     * @return array
+     * @throws \dml_exception
+     */
+    public static function getall_by_name($name, context_course $context) {
+        global $DB;
+
+        list($ufields, $searchparams, $wherecondition) = self::get_basic_search_conditions($name, $context);
+
+        list($esql, $enrolledparams) = get_enrolled_sql($context);
+
+        $sql = "SELECT $ufields
+              FROM {user} u
+              JOIN ($esql) je ON je.id = u.id
+              WHERE $wherecondition";
+
+        list($sort, $sortparams) = users_order_by_sql('u');
+        $sql = "$sql ORDER BY $sort";
+
+        $params = array_merge($searchparams, $enrolledparams, $sortparams);
+
+        return $DB->get_records_sql($sql, $params, 0, 10);
+    }
+
+    /**
+     * Helper method used by {@link getall_by_name()}.
+     *
+     * @param string $search the search term, if any.
+     * @param context_course $context course context
+     * @return array with three elements:
+     *     string list of fields to SELECT,
+     *     array query params. Note that the SQL snippets use named parameters,
+     *     string contents of SQL WHERE clause.
+     */
+    protected static function get_basic_search_conditions($search, context_course $context) {
+        global $DB, $CFG;
+
+        // Add some additional sensible conditions
+        $tests = ["u.id <> :guestid", 'u.deleted = 0', 'u.confirmed = 1'];
+        $params = ['guestid' => $CFG->siteguest];
+
+        if (!empty($search)) {
+            $conditions = get_extra_user_fields($context);
+            foreach (get_all_user_name_fields() as $field) {
+                $conditions[] = 'u.'.$field;
+            }
+
+            $conditions[] = $DB->sql_fullname('u.firstname', 'u.lastname');
+
+            $searchparam = '%' . $search . '%';
+
+            $i = 0;
+            foreach ($conditions as $key => $condition) {
+                $conditions[$key] = $DB->sql_like($condition, ":con{$i}00", false);
+                $params["con{$i}00"] = $searchparam;
+                $i++;
+            }
+
+            $tests[] = '(' . implode(' OR ', $conditions) . ')';
+        }
+
+        $wherecondition = implode(' AND ', $tests);
+
+        $extrafields = get_extra_user_fields($context, ['username', 'lastaccess']);
+        $extrafields[] = 'username';
+        $extrafields[] = 'lastaccess';
+        $extrafields[] = 'maildisplay';
+
+        $ufields = user_picture::fields('u', $extrafields);
+
+        return [$ufields, $params, $wherecondition];
     }
 }
