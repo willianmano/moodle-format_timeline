@@ -50,11 +50,13 @@ define(['format_timeline/tribute', 'core/ajax'], function(Tribute, Ajax) {
     };
 
     TributeInit.prototype.remoteSearch = function(text, cb) {
+        const courseid = document.getElementById("timeline-main").dataset.course;
+
         var request = Ajax.call([{
             methodname: 'format_timeline_enrolledusers',
             args: {
                 search: {
-                    course: 10,
+                    course: courseid,
                     name: text
                 }
             }
