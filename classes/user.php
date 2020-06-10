@@ -173,11 +173,14 @@ class user {
      *     string contents of SQL WHERE clause.
      */
     protected static function get_basic_search_conditions($search, context_course $context) {
-        global $DB, $CFG;
+        global $DB, $CFG, $USER;
 
-        // Add some additional sensible conditions
-        $tests = ["u.id <> :guestid", 'u.deleted = 0', 'u.confirmed = 1'];
-        $params = ['guestid' => $CFG->siteguest];
+        // Add some additional sensible conditions.
+        $tests = ["u.id <> :guestid", "u.deleted = 0", "u.confirmed = 1", "u.id <> :loggedinuser"];
+        $params = [
+            'guestid' => $CFG->siteguest,
+            'loggedinuser' => $USER->id
+        ];
 
         if (!empty($search)) {
             $conditions = get_extra_user_fields($context);

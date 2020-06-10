@@ -128,11 +128,16 @@ class posts extends external_api {
 
         $postid = $DB->insert_record('format_timeline_posts', $post);
 
+        $notification = new notifications($course->id, $course->fullname, $postid, $context);
+
+        if (!empty($userstonotifymention)) {
+            $notification->send_mentions_notifications($userstonotifymention);
+        }
+
         if (!$post->parent) {
             \core\notification::success(get_string('postcreated', 'format_timeline'));
 
-            $notification = new notifications($course->id, $course->fullname, $postid, $context);
-            $notification->send();
+            $notification->send_newpost_notifications();
 
             return [
                 'status' => 'ok',

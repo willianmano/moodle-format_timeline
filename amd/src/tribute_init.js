@@ -21,7 +21,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/* eslint-disable no-console */
 define(['format_timeline/tribute', 'core/ajax'], function(Tribute, Ajax) {
     var TributeInit = function() {
         var tribute = new Tribute({

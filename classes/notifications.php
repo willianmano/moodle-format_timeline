@@ -42,7 +42,7 @@ class notifications {
     public $coursename;
     /** @var int The post ID. */
     public $postid;
-    /** @var \stdClass Course context. */
+    /** @var \context_course Course context. */
     public $context;
 
     /**
@@ -53,11 +53,37 @@ class notifications {
      * @param $postid
      * @param $context
      */
-    public function __construct($courseid, $coursename, $postid, $context) {
+    public function __construct($courseid, $coursename, $postid, \context_course $context) {
         $this->courseid = $courseid;
         $this->coursename = $coursename;
         $this->postid = $postid;
         $this->context = $context;
+    }
+
+    /**
+     * Send the message
+     *
+     * @return bool
+     *
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
+    public function send_newpost_notifications() {
+        $users = $this->get_users_to_notify();
+
+        if (empty($users)) {
+            return true;
+        }
+
+        $messagedata = $this->get_newpost_message_data();
+
+        foreach ($users as $user) {
+            $messagedata->userto = $user;
+
+            message_send($messagedata);
+        }
+
+        return true;
     }
 
     /**
@@ -83,7 +109,7 @@ class notifications {
      * @throws \coding_exception
      * @throws \moodle_exception
      */
-    protected function get_message_data() {
+    protected function get_newpost_message_data() {
         global $USER;
 
         $newpostinthecourse = get_string('message_newpostinthecourse', 'format_timeline');
@@ -103,7 +129,7 @@ class notifications {
         $message->fullmessagehtml .= '<p><a class="btn btn-primary" href="'.$url.'">'.$clicktoaccesspost.'</a></p>';
         $message->smallmessage = $newpostinacourse;
         $message->contexturl = $url;
-        $message->contexturlname = get_string('message_contextname', 'format_timeline');
+        $message->contexturlname = get_string('message_newpostcontextname', 'format_timeline');
         $message->courseid = $this->courseid;
 
         return $message;
@@ -112,19 +138,16 @@ class notifications {
     /**
      * Send the message
      *
+     * @param array $users A list of users ids to be notifiable
+     *
      * @return bool
      *
      * @throws \coding_exception
      * @throws \moodle_exception
      */
-    public function send() {
-        $users = $this->get_users_to_notify();
+    public function send_mentions_notifications(array $users) {
 
-        if (empty($users)) {
-            return true;
-        }
-
-        $messagedata = $this->get_message_data();
+        $messagedata = $this->get_mention_message_data();
 
         foreach ($users as $user) {
             $messagedata->userto = $user;
@@ -133,5 +156,39 @@ class notifications {
         }
 
         return true;
+    }
+
+    /**
+     * Get the notification message data
+     *
+     * @return message
+     *
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     */
+    protected function get_mention_message_data() {
+        global $USER;
+
+        $youwerementioned = get_string('message_mentionuserementioned', 'format_timeline');
+        $youwerementionedincourse = get_string('message_mentionuserementionedincourse', 'format_timeline', $this->coursename);
+        $clicktoaccesspost = get_string('message_clicktoaccesspost', 'format_timeline');
+
+        $url = new moodle_url("/course/view.php?id={$this->courseid}#discuss-{$this->postid}");
+
+        $message = new message();
+        $message->component = 'format_timeline';
+        $message->name = 'postmention';
+        $message->userfrom = $USER;
+        $message->subject = $youwerementioned;
+        $message->fullmessage = "{$youwerementioned}: {$this->coursename}";
+        $message->fullmessageformat = FORMAT_PLAIN;
+        $message->fullmessagehtml = '<p>'.$youwerementionedincourse.'</p>';
+        $message->fullmessagehtml .= '<p><a class="btn btn-primary" href="'.$url.'">'.$clicktoaccesspost.'</a></p>';
+        $message->smallmessage = $youwerementioned;
+        $message->contexturl = $url;
+        $message->contexturlname = get_string('message_mentioncontextname', 'format_timeline');
+        $message->courseid = $this->courseid;
+
+        return $message;
     }
 }

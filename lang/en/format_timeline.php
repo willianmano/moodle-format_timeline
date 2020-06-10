@@ -50,3 +50,6 @@ $string['message_contextname'] = 'Timeline posts';
 $string['message_newpostinthecourse'] = 'There is a new post in your course';
 $string['message_newpostinacourse'] = 'There is a new post in a course';
 $string['message_clicktoaccesspost'] = 'Click here to access the post';
+$string['message_mentioncontextname'] = 'Mention in a post.';
+$string['message_mentionuserementioned'] = 'You were mentioned in a post';
+$string['message_mentionuserementionedincourse'] = 'You were mentioned in a post in the course <b>{$a}</b>';

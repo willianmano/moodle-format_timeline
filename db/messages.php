@@ -24,11 +24,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$messageproviders = array(
-    'timelineposts' => array(
-        'defaults' => array(
+$messageproviders = [
+    'timelineposts' => [
+        'defaults' => [
             'popup' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN,
             'email' => MESSAGE_PERMITTED
-        ),
-    )
-);
+        ]
+    ],
+    'postmention' => [
+        'defaults' => [
+            'popup' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN,
+            'email' => MESSAGE_PERMITTED
+        ]
+    ]
+];
