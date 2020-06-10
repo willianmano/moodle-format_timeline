@@ -139,9 +139,51 @@
     margin-right: .5rem;
 }
 
-.format-timeline .discuss .add-comment input {
+.format-timeline .discuss .add-comment .post-comment-input {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+    display: block;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -o-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    outline: none;
+    min-height: 32px;
+    cursor: text;
+}
+
+.format-timeline .discuss .add-comment .post-comment-input:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #6eb5f3;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(17,119,209,.25);
+    box-shadow: 0 0 0 0.2rem rgba(17,119,209,.25);
+}
+
+.format-timeline .discuss .add-comment .post-comment-input[contenteditable="true"]:empty:before {
+    content: attr(placeholder);
+    display: block;
+    color: #ccc;
+}
+
+.format-timeline .discuss .add-comment .post-comment-input a.usermentioned {
+    padding: 0 .5rem;
+    background-color: #d9edff;
+    border-radius: 12px;
+    display: inline-block;
 }
 
 .format-timeline .discuss .add-comment .input-group-append .btn {

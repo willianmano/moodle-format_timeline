@@ -82,11 +82,7 @@
                 {{/loggedinuserinfo}}
 
                 <div class="input-group">
-                    <input type="text"
-                           placeholder="{{#str}}writeacomment, format_timeline{{/str}}"
-                           title="{{#str}}writeacomment, format_timeline{{/str}}"
-                           class="form-control post-comment-input"
-                           name="post-comment">
+                    <p class="post-comment-input" placeholder="{{#str}}writeacomment, format_timeline{{/str}}" contenteditable="true" data-tribute="true"></p>
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary post-comment-btn" type="button">
                             <i class="fa fa-commenting-o"></i> {{#str}}comment, format_timeline{{/str}}

@@ -52,7 +52,7 @@ class posts extends external_api {
         return new external_function_parameters([
             'post' => new external_single_structure([
                 'course' => new external_value(PARAM_INT, 'The course id', VALUE_REQUIRED),
-                'message' => new external_value(PARAM_TEXT, 'The post message', VALUE_REQUIRED),
+                'message' => new external_value(PARAM_RAW, 'The post message', VALUE_REQUIRED),
                 'parent' => new external_value(PARAM_INT, 'The parent post', VALUE_OPTIONAL)
             ])
         ]);
@@ -106,24 +106,43 @@ class posts extends external_api {
 
         // Handle the mentions.
         $matches = [];
-        preg_match_all('/@(.*?)@/s', $post->message, $matches);
+        preg_match_all('/<span(.*?)<\/span>/s', $post->message, $matches);
+        $replaces = [];
         if (!empty($matches[0])) {
-            $userstonotifymention = [];
-
             for ($i = 0; $i < count($matches[0]); $i++) {
-                $user = user::getall_by_name($matches[1][$i], $context);
+                $userstonotifymention = [];
 
-                if ($user) {
-                    $user = current($user);
+                $mention = $matches[0][$i];
 
-                    $userprofilelink = new moodle_url('/user/view.php',  ['id' => $user->id, 'course' => $course->id]);
-                    $userprofilelink = html_writer::link($userprofilelink->out(false), fullname($user));
+                $useridmatches = null;
+                preg_match( '@data-uid="([^"]+)"@' , $mention, $useridmatches);
+                $userid = array_pop($useridmatches);
 
-                    $post->message = str_replace($matches[0][$i], $userprofilelink, $post->message);
-
-                    $userstonotifymention[] = $user->id;
+                if (!$userid) {
+                    continue;
                 }
+
+                $user = user::get_by_id($userid, $context);
+
+                if (!$user) {
+                    continue;
+                }
+
+                $userprofilelink = new moodle_url('/user/view.php',  ['id' => $user->id, 'course' => $course->id]);
+                $userprofilelink = html_writer::link($userprofilelink->out(false), fullname($user));
+
+                $post->message = str_replace($mention, "[replace{$i}]", $post->message);
+
+                $replaces['replace' . $i] = $userprofilelink;
+
+                $userstonotifymention[] = $user->id;
             }
+        }
+
+        $post->message = strip_tags($post->message);
+
+        foreach ($replaces as $key => $replace) {
+            $post->message = str_replace("[$key]", $replace, $post->message);
         }
 
         $postid = $DB->insert_record('format_timeline_posts', $post);

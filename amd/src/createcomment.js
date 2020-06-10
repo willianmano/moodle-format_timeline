@@ -21,6 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/* eslint-disable no-console */
 define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, Swal) {
     var CreateComment = function() {
         this.registerEventListeners();
@@ -31,29 +32,30 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
             var keycode = (event.keyCode ? event.keyCode : event.which);
 
             if (keycode === 13) {
+                event.preventDefault();
+
                 var target = $(event.currentTarget);
 
-                this.saveComment(target, target.val());
-
-                target.val('');
+                this.saveComment(target, target.html());
             }
         }.bind(this));
 
         $(".post-comment-btn").click(function(event) {
             var target = $(event.currentTarget).closest('.input-group').children('.post-comment-input');
 
-            this.saveComment(target, target.val());
-
-            target.val('');
+            this.saveComment(target, target.html());
         }.bind(this));
     };
 
-    CreateComment.prototype.saveComment = function(target, value) {
+    CreateComment.prototype.saveComment = function(postinput, value) {
         if (value === '') {
             return;
         }
 
-        var discussdiv = target.closest('.discuss');
+        var discussdiv = postinput.closest('.discuss');
+
+        postinput.empty();
+
         if (discussdiv.length === 0 || discussdiv.length > 1) {
             this.showToast('error', 'Erro ao tentar localizar a discussão para este comentário.');
 

@@ -128,6 +128,32 @@ class user {
     }
 
     /**
+     * Get all users enrolled in a course by id
+     *
+     * @param int $userid
+     * @param context_course $context
+     *
+     * @return \stdClass
+     * @throws \dml_exception
+     */
+    public static function get_by_id($userid, context_course $context) {
+        global $DB;
+
+        $ufields = user_picture::fields('u');
+
+        list($esql, $enrolledparams) = get_enrolled_sql($context);
+
+        $sql = "SELECT $ufields
+              FROM {user} u
+              JOIN ($esql) je ON je.id = u.id
+              WHERE u.id = :userid";
+
+        $params = array_merge($enrolledparams, ['userid' => $userid]);
+
+        return $DB->get_record_sql($sql, $params, MUST_EXIST);
+    }
+
+    /**
      * Get all users enrolled in a course by name
      *
      * @param string $name

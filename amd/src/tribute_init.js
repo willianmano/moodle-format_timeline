@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['format_timeline/tribute', 'core/ajax'], function(Tribute, Ajax) {
+define(['core/config', 'format_timeline/tribute', 'core/ajax'], function(mdlcfg, Tribute, Ajax) {
     var TributeInit = function() {
         var tribute = new Tribute({
             values: function(text, cb) {
@@ -32,10 +32,21 @@ define(['format_timeline/tribute', 'core/ajax'], function(Tribute, Ajax) {
                     return null;
                 }
 
+                if (this.range.isContentEditable(this.current.element)) {
+                    const courseid = document.getElementById("timeline-main").dataset.course;
+
+                    return (
+                        '<span contenteditable="false">' +
+                        '<a href="' + mdlcfg.wwwroot + '/user/view.php?id=' + item.original.id + '&course=' + courseid + '"' +
+                        ' target="_blank" class="usermentioned" data-uid="' + item.original.id + '">' + item.original.fullname +
+                        "</a></span>"
+                    );
+                }
+
                 return '@' + item.original.fullname + '@';
             },
             noMatchTemplate: function() {
-                return '<span style:"visibility: hidden;"></span>';
+                return '<span style="visibility: hidden;"></span>';
             },
             menuItemTemplate: function(item) {
                 return '<img src="' + item.original.picture + '">' + item.string;
