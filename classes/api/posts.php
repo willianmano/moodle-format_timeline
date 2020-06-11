@@ -100,7 +100,7 @@ class posts extends external_api {
         }
 
         $post->message = trim($post->message);
-        $post->userid = $USER->id;
+        $post->user = $USER->id;
         $post->timecreated = time();
         $post->timemodified = time();
 

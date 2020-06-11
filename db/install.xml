@@ -8,8 +8,9 @@
             <FIELDS>
                 <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
                 <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+                <FIELD NAME="user" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="parent" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="group" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="message" TYPE="text" NOTNULL="true" />
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
@@ -17,12 +18,12 @@
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-                <KEY NAME="course" TYPE="foreign" FIELDS="course" REFTABLE="course" REFFIELDS="id"/>
-                <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
-                <KEY NAME="parent" TYPE="foreign" FIELDS="parent" REFTABLE="format_timeline_posts" REFFIELDS="id" COMMENT="note that to make this recursive FK working someday, the parent field must be decalred NULL"/>
+                <KEY NAME="fk_course" TYPE="foreign" FIELDS="course" REFTABLE="course" REFFIELDS="id"/>
+                <KEY NAME="fk_user" TYPE="foreign" FIELDS="user" REFTABLE="user" REFFIELDS="id"/>
+                <KEY NAME="fk_parent" TYPE="foreign" FIELDS="parent" REFTABLE="format_timeline_posts" REFFIELDS="id" COMMENT="note that to make this recursive FK working someday, the parent field must be decalred NULL"/>
             </KEYS>
             <INDEXES>
-                <INDEX NAME="user" UNIQUE="false" FIELDS="userid"/>
+                <INDEX NAME="idx_user" UNIQUE="false" FIELDS="user"/>
             </INDEXES>
         </TABLE>
     </TABLES>

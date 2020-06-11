@@ -15,18 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Capabilities for Timeline course format
  *
- * @package    format
- * @subpackage timeline
+ * @package    format_timeline
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2020060800;
-$plugin->requires  = 2019111200;
-$plugin->component = 'format_timeline';
-$plugin->maturity  = MATURITY_BETA;
-$plugin->release   = '0.0.6';
+$capabilities = [
+    'format/timeline:createpost' => [
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+        ]
+    ]
+];

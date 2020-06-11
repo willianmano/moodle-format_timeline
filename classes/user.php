@@ -86,7 +86,7 @@ class user {
      * @throws \coding_exception
      */
     public static function can_add_post($context, $user = null) {
-        return has_capability('moodle/course:update', $context, $user);
+        return has_capability('format/timeline:createpost', $context, $user);
     }
 
     /**
@@ -104,7 +104,7 @@ class user {
             $user = $USER;
         }
 
-        if ($post->userid == $user->id) {
+        if ($post->user == $user->id) {
             return true;
         }
 

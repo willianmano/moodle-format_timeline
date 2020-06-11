@@ -47,9 +47,9 @@ class posts {
 
         $userpicfields = \user_picture::fields('u');
 
-        $sql = "SELECT p.id as pid, p.course, p.userid, p.message, p.timecreated, {$userpicfields}
+        $sql = "SELECT p.id as pid, p.course, p.user, p.message, p.timecreated, {$userpicfields}
                 FROM {format_timeline_posts} p
-                INNER JOIN {user} u ON u.id = p.userid
+                INNER JOIN {user} u ON u.id = p.user
                 WHERE course = :course AND parent IS NULL AND timedeleted IS NULL";
 
         $params = ['course' => $courseid];
@@ -85,7 +85,7 @@ class posts {
 
         $sql = "SELECT p.id as pid, p.message, p.timecreated, {$userpicfields}
                 FROM {format_timeline_posts} p
-                INNER JOIN {user} u ON u.id = p.userid
+                INNER JOIN {user} u ON u.id = p.user
                 WHERE parent = :parent AND timedeleted IS NULL
                 ORDER BY pid ASC";
 

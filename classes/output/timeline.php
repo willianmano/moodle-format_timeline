@@ -88,7 +88,7 @@ class timeline implements templatable, renderable {
         $timelineitems = $this->get_course_timeline_items();
 
         $hasactions = true;
-        if (!$openactivitychoooser || !$canaddpost) {
+        if (!$openactivitychoooser && !$canaddpost) {
             $hasactions = false;
         }
 
