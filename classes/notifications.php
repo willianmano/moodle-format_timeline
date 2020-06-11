@@ -131,6 +131,7 @@ class notifications {
         $message->contexturl = $url;
         $message->contexturlname = get_string('message_newpostcontextname', 'format_timeline');
         $message->courseid = $this->courseid;
+        $message->notification = 1;
 
         return $message;
     }
@@ -188,6 +189,7 @@ class notifications {
         $message->contexturl = $url;
         $message->contexturlname = get_string('message_mentioncontextname', 'format_timeline');
         $message->courseid = $this->courseid;
+        $message->notification = 1;
 
         return $message;
     }

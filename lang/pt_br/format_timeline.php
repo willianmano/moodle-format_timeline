@@ -28,6 +28,7 @@ $string['hidefromothers'] = 'Ocultar linha do tempo';
 $string['showfromothers'] = 'Exibir linha do tempo';
 $string['wanttodo'] = 'O que você deseja fazer, professor?';
 $string['messageprovider:timelineposts'] = 'Notificação de publicações do formato de curso Linha do Tempo';
+$string['messageprovider:postmention'] = 'Notificação de menção em uma publicação';
 $string['createpost'] = 'Criar uma nova publicação';
 $string['createpost_validator_message'] = 'A publicação deve ter pelo menos 10 caracteres.';
 $string['postedon'] = 'Postado em:';

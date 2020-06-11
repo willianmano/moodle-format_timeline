@@ -28,6 +28,7 @@ $string['hidefromothers'] = 'Hide timeline';
 $string['showfromothers'] = 'Show timeline';
 $string['wanttodo'] = 'What do you want to do, teacher?';
 $string['messageprovider:timelineposts'] = 'Notification of new posts from Timeline course format';
+$string['messageprovider:postmention'] = 'Post mention notification';
 $string['createpost'] = 'Create a new post';
 $string['createpost_validator_message'] = 'The post must be at least 10 characters long.';
 $string['postedon'] = 'Posted on:';
