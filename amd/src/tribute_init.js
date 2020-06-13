@@ -33,7 +33,7 @@ define(['core/config', 'format_timeline/tribute', 'core/ajax'], function(mdlcfg,
                 }
 
                 if (this.range.isContentEditable(this.current.element)) {
-                    const courseid = document.getElementById("timeline-main").dataset.course;
+                    const courseid = document.getElementById("timeline-main").dataset.courseid;
 
                     return (
                         '<span contenteditable="false">' +
