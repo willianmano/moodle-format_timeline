@@ -24,10 +24,10 @@
 
 namespace format_timeline\output;
 
-use format_timeline\activities;
-use format_timeline\modinfo;
-use format_timeline\posts;
-use format_timeline\user;
+use format_timeline\local\activities;
+use format_timeline\local\modinfo;
+use format_timeline\local\posts;
+use format_timeline\local\user;
 use templatable;
 use renderable;
 use renderer_base;

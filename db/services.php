@@ -26,24 +26,24 @@ defined('MOODLE_INTERNAL') || die();
 
 $functions = [
     'format_timeline_createpost' => [
-        'classname' => 'format_timeline\api\posts',
-        'classpath' => 'course/format/timeline/classes/api/posts.php',
+        'classname' => 'format_timeline\external\posts',
+        'classpath' => 'course/format/timeline/classes/external/posts.php',
         'methodname' => 'create',
         'description' => 'Creates a new post',
         'type' => 'write',
         'ajax' => true
     ],
     'format_timeline_deletepost' => [
-        'classname' => 'format_timeline\api\posts',
-        'classpath' => 'course/format/timeline/classes/api/posts.php',
+        'classname' => 'format_timeline\external\posts',
+        'classpath' => 'course/format/timeline/classes/external/posts.php',
         'methodname' => 'delete',
         'description' => 'Deletes a post',
         'type' => 'write',
         'ajax' => true
     ],
     'format_timeline_enrolledusers' => [
-        'classname' => 'format_timeline\api\users',
-        'classpath' => 'course/format/timeline/classes/api/users.php',
+        'classname' => 'format_timeline\external\users',
+        'classpath' => 'course/format/timeline/classes/external/users.php',
         'methodname' => 'enrolledusers',
         'description' => 'Get the list of users enrolled in a course',
         'type' => 'read',

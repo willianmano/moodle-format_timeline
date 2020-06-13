@@ -55,7 +55,7 @@
                 {{{openactivitychoooser}}}
 
                 {{#canaddpost}}
-                    <a href="#" id="create-post-btn" data-course="{{courseid}}" class="btn btn-primary"><i class="fa fa-pencil"></i> {{#str}}createpost, format_timeline{{/str}}</a>
+                    <a href="#" id="create-post-btn" data-courseid="{{courseid}}" class="btn btn-primary"><i class="fa fa-pencil"></i> {{#str}}createpost, format_timeline{{/str}}</a>
                 {{/canaddpost}}
             </div>
         </div>
@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<div class="timeline" id="timeline-main" data-course="{{courseid}}">
+<div class="timeline" id="timeline-main" data-courseid="{{courseid}}">
     <ul class="section img-text">
         {{{timelineitems}}}
     </ul>

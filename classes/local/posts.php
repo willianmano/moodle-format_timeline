@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace format_timeline;
+namespace format_timeline\local;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -47,12 +47,12 @@ class posts {
 
         $userpicfields = \user_picture::fields('u');
 
-        $sql = "SELECT p.id as pid, p.course, p.user, p.message, p.timecreated, {$userpicfields}
+        $sql = "SELECT p.id as pid, p.courseid, p.userid, p.message, p.timecreated, {$userpicfields}
                 FROM {format_timeline_posts} p
-                INNER JOIN {user} u ON u.id = p.user
-                WHERE course = :course AND parent IS NULL AND timedeleted IS NULL";
+                INNER JOIN {user} u ON u.id = p.userid
+                WHERE p.courseid = :courseid AND p.parent IS NULL AND timedeleted IS NULL";
 
-        $params = ['course' => $courseid];
+        $params = ['courseid' => $courseid];
 
         $posts = array_values($DB->get_records_sql($sql, $params));
 
@@ -74,7 +74,7 @@ class posts {
      *
      * @param $parentid
      *
-     * @return array|null
+     * @return array|false
      *
      * @throws \dml_exception
      */
@@ -85,8 +85,8 @@ class posts {
 
         $sql = "SELECT p.id as pid, p.message, p.timecreated, {$userpicfields}
                 FROM {format_timeline_posts} p
-                INNER JOIN {user} u ON u.id = p.user
-                WHERE parent = :parent AND timedeleted IS NULL
+                INNER JOIN {user} u ON u.id = p.userid
+                WHERE p.parent = :parent AND timedeleted IS NULL
                 ORDER BY pid ASC";
 
         $params = ['parent' => $parentid];
@@ -97,6 +97,6 @@ class posts {
             return array_values($posts);
         }
 
-        return null;
+        return false;
     }
 }

@@ -24,7 +24,7 @@
 
 namespace format_timeline\output;
 
-use format_timeline\user;
+use format_timeline\local\user;
 use templatable;
 use renderable;
 use renderer_base;
@@ -79,7 +79,7 @@ class timeline_post_item implements templatable, renderable {
         // Get the user fullname.
         $this->item->fullname = fullname($this->item);
 
-        if ($this->item->children) {
+        if (isset($this->item->children)) {
             foreach ($this->item->children as $key => $child) {
                 $this->item->children[$key]->fullname = fullname($child);
                 $this->item->children[$key]->humantimecreated = userdate($child->timecreated);

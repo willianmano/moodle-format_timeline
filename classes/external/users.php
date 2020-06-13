@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace format_timeline\api;
+namespace format_timeline\external;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -32,7 +32,7 @@ use external_function_parameters;
 use external_single_structure;
 use external_multiple_structure;
 use context_course;
-use format_timeline\user;
+use format_timeline\local\user;
 use user_picture;
 
 /**
@@ -50,7 +50,7 @@ class users extends external_api {
     public static function enrolledusers_parameters() {
         return new external_function_parameters([
             'search' => new external_single_structure([
-                'course' => new external_value(PARAM_INT, 'The course id', VALUE_REQUIRED),
+                'courseid' => new external_value(PARAM_INT, 'The course id', VALUE_REQUIRED),
                 'name' => new external_value(PARAM_TEXT, 'The user name', VALUE_REQUIRED)
             ])
         ]);
@@ -75,7 +75,7 @@ class users extends external_api {
 
         $search = (object)$search;
 
-        $course = $DB->get_record('course', ['id' => $search->course], '*', MUST_EXIST);
+        $course = $DB->get_record('course', ['id' => $search->courseid], '*', MUST_EXIST);
         $context = context_course::instance($course->id);
 
         $PAGE->set_context($context);

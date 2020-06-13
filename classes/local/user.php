@@ -22,7 +22,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace format_timeline;
+namespace format_timeline\local;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -104,7 +104,7 @@ class user {
             $user = $USER;
         }
 
-        if ($post->user == $user->id) {
+        if ($post->userid == $user->id) {
             return true;
         }
 

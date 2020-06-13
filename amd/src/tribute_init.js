@@ -61,13 +61,13 @@ define(['core/config', 'format_timeline/tribute', 'core/ajax'], function(mdlcfg,
     };
 
     TributeInit.prototype.remoteSearch = function(text, cb) {
-        const courseid = document.getElementById("timeline-main").dataset.course;
+        const courseid = document.getElementById("timeline-main").dataset.courseid;
 
         var request = Ajax.call([{
             methodname: 'format_timeline_enrolledusers',
             args: {
                 search: {
-                    course: courseid,
+                    courseid: courseid,
                     name: text
                 }
             }

@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace format_timeline\api;
+namespace format_timeline\external;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -31,8 +31,8 @@ use external_value;
 use external_single_structure;
 use external_function_parameters;
 use context_course;
-use format_timeline\notifications;
-use format_timeline\user;
+use format_timeline\local\notifications;
+use format_timeline\local\user;
 use moodle_url;
 use html_writer;
 
@@ -51,7 +51,7 @@ class posts extends external_api {
     public static function create_parameters() {
         return new external_function_parameters([
             'post' => new external_single_structure([
-                'course' => new external_value(PARAM_INT, 'The course id', VALUE_REQUIRED),
+                'courseid' => new external_value(PARAM_INT, 'The course id', VALUE_REQUIRED),
                 'message' => new external_value(PARAM_RAW, 'The post message', VALUE_REQUIRED),
                 'parent' => new external_value(PARAM_INT, 'The parent post', VALUE_OPTIONAL)
             ])
@@ -77,8 +77,8 @@ class posts extends external_api {
 
         $post = (object)$post;
 
-        $course = $DB->get_record('course', ['id' => $post->course], '*', MUST_EXIST);
-        $context = context_course::instance($post->course);
+        $course = $DB->get_record('course', ['id' => $post->courseid], '*', MUST_EXIST);
+        $context = context_course::instance($post->courseid);
 
         if (!$post->parent) {
             if (!user::can_add_post($context, $USER)) {
@@ -100,7 +100,7 @@ class posts extends external_api {
         }
 
         $post->message = trim($post->message);
-        $post->user = $USER->id;
+        $post->userid = $USER->id;
         $post->timecreated = time();
         $post->timemodified = time();
 

@@ -63,8 +63,8 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
         }
 
         var id = discussdiv.data('id');
-        var course = discussdiv.data('course');
-        if (typeof id === undefined || typeof course === undefined) {
+        var courseid = discussdiv.data('courseid');
+        if (typeof id === undefined || typeof courseid === undefined) {
             this.showInvalidDiscussNotification();
         }
 
@@ -72,7 +72,7 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
             methodname: 'format_timeline_createpost',
             args: {
                 post: {
-                    course: course,
+                    courseid: courseid,
                     message: value,
                     parent: id
                 }

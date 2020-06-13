@@ -27,7 +27,7 @@ namespace format_timeline\output;
 use templatable;
 use renderable;
 use renderer_base;
-use format_timeline\modinfo;
+use format_timeline\local\modinfo;
 
 /**
  * Timeline course item renderer class.

@@ -65,7 +65,7 @@ define(['jquery', 'core/notification', 'core/custom_interaction_events', 'core/m
                     methodname: 'format_timeline_createpost',
                     args: {
                         post: {
-                            course: postbtn.data('course'),
+                            courseid: postbtn.data('courseid'),
                             message: $('#post-message').val()
                         }
                     }
