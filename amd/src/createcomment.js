@@ -21,7 +21,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/* eslint-disable no-console */
 define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, Swal) {
     var CreateComment = function() {
         this.registerEventListeners();
@@ -69,7 +68,7 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
         }
 
         var request = Ajax.call([{
-            methodname: 'format_timeline_createpost',
+            methodname: 'format_timeline_createcomment',
             args: {
                 post: {
                     courseid: courseid,

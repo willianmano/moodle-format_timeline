@@ -34,6 +34,7 @@ $string['createpost_validator_message'] = 'The post must be at least 10 characte
 $string['postedon'] = 'Posted on:';
 $string['comment'] = 'Comment';
 $string['writeacomment'] = 'Write a comment';
+$string['writethepost'] = 'Write the post message';
 $string['youcantaddpost'] = 'You do not have permission to add a post in this course.';
 $string['youcantdeletepost'] = 'You do not have permission to delete this post.';
 $string['onlyenrolleduserscancomment'] = 'Sorry, only enrolled users can comment course posts.';

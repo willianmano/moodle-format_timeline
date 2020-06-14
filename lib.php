@@ -135,3 +135,31 @@ class format_timeline extends format_base
         return $ajaxsupport;
     }
 }
+
+function format_timeline_output_fragment_createpost_form($args) {
+    $args = (object) $args;
+    $context = $args->context;
+    $o = '';
+
+    $formdata = [];
+    if (!empty($args->jsonformdata)) {
+        $serialiseddata = json_decode($args->jsonformdata);
+        parse_str($serialiseddata, $formdata);
+    }
+
+    list($ignored, $course) = get_context_info_array($context->id);
+
+    $mform = new \format_timeline\local\forms\createpost_form($formdata, ['courseid' => $course->id]);
+
+    if (!empty($args->jsonformdata)) {
+        // If we were passed non-empty form data we want the mform to call validation functions and show errors.
+        $mform->is_validated();
+    }
+
+    ob_start();
+    $mform->display();
+    $o .= ob_get_contents();
+    ob_end_clean();
+
+    return $o;
+}

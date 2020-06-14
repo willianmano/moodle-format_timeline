@@ -55,7 +55,7 @@
                 {{{openactivitychoooser}}}
 
                 {{#canaddpost}}
-                    <a href="#" id="create-post-btn" data-courseid="{{courseid}}" class="btn btn-primary"><i class="fa fa-pencil"></i> {{#str}}createpost, format_timeline{{/str}}</a>
+                    <a href="#" id="create-post-btn" data-action="createpostmodal" data-courseid="{{courseid}}" class="btn btn-primary"><i class="fa fa-pencil"></i> {{#str}}createpost, format_timeline{{/str}}</a>
                 {{/canaddpost}}
             </div>
         </div>
@@ -93,15 +93,15 @@
         'format_timeline/deletepost',
         'format_timeline/tribute_init',
         'format_timeline/fixanchoroffset'],
-    function(createpost, createcomment, deletepost, tributeinit, fixanchoroffset) {
-        createpost.init();
+    function(CreatePost, CreateComment, DeletePost, TributeInit, FixAnchorOffset) {
+        CreatePost.init('[data-action=createpostmodal]', {{contextid}});
 
-        createcomment.init();
+        CreateComment.init();
 
-        deletepost.init();
+        DeletePost.init();
 
-        tributeinit.init();
+        TributeInit.init();
 
-        fixanchoroffset.init();
+        FixAnchorOffset.init();
     });
 {{/js}}

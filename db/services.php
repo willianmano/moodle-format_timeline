@@ -28,7 +28,7 @@ $functions = [
     'format_timeline_createpost' => [
         'classname' => 'format_timeline\external\posts',
         'classpath' => 'course/format/timeline/classes/external/posts.php',
-        'methodname' => 'create',
+        'methodname' => 'post',
         'description' => 'Creates a new post',
         'type' => 'write',
         'ajax' => true
@@ -38,6 +38,14 @@ $functions = [
         'classpath' => 'course/format/timeline/classes/external/posts.php',
         'methodname' => 'delete',
         'description' => 'Deletes a post',
+        'type' => 'write',
+        'ajax' => true
+    ],
+    'format_timeline_createcomment' => [
+        'classname' => 'format_timeline\external\posts',
+        'classpath' => 'course/format/timeline/classes/external/posts.php',
+        'methodname' => 'comment',
+        'description' => 'Creates a new post',
         'type' => 'write',
         'ajax' => true
     ],

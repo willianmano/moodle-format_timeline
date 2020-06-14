@@ -34,6 +34,7 @@ $string['createpost_validator_message'] = 'A publicação deve ter pelo menos 10
 $string['postedon'] = 'Postado em:';
 $string['comment'] = 'Comentar';
 $string['writeacomment'] = 'Escreva um comentário';
+$string['writethepost'] = 'Digite o texto da publicação';
 $string['youcantaddpost'] = 'Você não tem permissão para adicionar uma publicação neste curso.';
 $string['youcantdeletepost'] = 'Você não tem permissão para excluir esta publicação.';
 $string['onlyenrolleduserscancomment'] = 'Desculpe, somente usuários inscritos podem comentar nas publicações.';

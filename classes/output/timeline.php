@@ -99,7 +99,8 @@ class timeline implements templatable, renderable {
             'canaddpost' => $canaddpost,
             'hasactions' => $hasactions,
             'filterlinks' => $this->get_filters_links(),
-            'timelineitems' => $timelineitems
+            'timelineitems' => $timelineitems,
+            'contextid' => $this->page->context->id
         ];
     }
 

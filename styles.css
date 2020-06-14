@@ -198,6 +198,18 @@
     animation: format-timeline_fadein 1s ease-in-out;
 }
 
+/* Modal form. */
+.format-timeline .mform.full-width-labels .fitem.row > .col-md-3,
+.mform.full-width-labels .fitem.row > .col-md-9 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.format-timeline .mform.full-width-labels #id_message,
+.format-timeline .mform.full-width-labels #id_group {
+    width: 100%;
+}
+
 /* Some animations. */
 @-webkit-keyframes format-timeline_fadein {
     0% { opacity: 0; }

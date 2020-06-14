@@ -31,10 +31,12 @@ use external_value;
 use external_single_structure;
 use external_function_parameters;
 use context_course;
+use format_timeline\local\forms\createpost_form;
 use format_timeline\local\notifications;
 use format_timeline\local\user;
 use moodle_url;
 use html_writer;
+use context;
 
 /**
  * Class posts
@@ -48,18 +50,109 @@ class posts extends external_api {
      *
      * @return external_function_parameters
      */
-    public static function create_parameters() {
+    public static function post_parameters() {
         return new external_function_parameters([
-            'post' => new external_single_structure([
-                'courseid' => new external_value(PARAM_INT, 'The course id', VALUE_REQUIRED),
-                'message' => new external_value(PARAM_RAW, 'The post message', VALUE_REQUIRED),
-                'parent' => new external_value(PARAM_INT, 'The parent post', VALUE_OPTIONAL)
-            ])
+            'contextid' => new external_value(PARAM_INT, 'The context id for the course'),
+            'jsonformdata' => new external_value(PARAM_RAW, 'The data from the post form, encoded as a json array')
         ]);
     }
 
     /**
      * Create post method
+     *
+     * @param int $contextid
+     * @param string $jsonformdata
+     *
+     * @return array
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \invalid_parameter_exception
+     * @throws \moodle_exception
+     */
+    public static function post($contextid, $jsonformdata) {
+        global $DB, $USER;
+
+        // We always must pass webservice params through validate_parameters.
+        $params = self::validate_parameters(self::post_parameters(),
+            ['contextid' => $contextid, 'jsonformdata' => $jsonformdata]);
+
+        $context = context::instance_by_id($params['contextid'], MUST_EXIST);
+
+        // We always must call validate_context in a webservice.
+        self::validate_context($context);
+
+        list($ignored, $course) = get_context_info_array($context->id);
+
+        $serialiseddata = json_decode($params['jsonformdata']);
+
+        $data = [];
+        parse_str($serialiseddata, $data);
+
+        $mform = new createpost_form($data, ['courseid' => $course->id]);
+
+        $validateddata = $mform->get_data();
+
+        if (!$validateddata) {
+            throw new \moodle_exception('invalidformdata');
+        }
+
+        if (!user::can_add_post($context, $USER)) {
+            throw new \moodle_exception(get_string('youcantaddpost', 'format_timeline'));
+        }
+
+        $post = new \stdClass();
+        $post->courseid = $validateddata->courseid;
+        $post->message = trim($validateddata->message);
+        $post->userid = $USER->id;
+        $post->groupid = $validateddata->groupid > 0 ? $validateddata->groupid : null;
+        $post->timecreated = time();
+        $post->timemodified = time();
+
+        $post->message = strip_tags($post->message);
+
+        $postid = $DB->insert_record('format_timeline_posts', $post);
+
+        \core\notification::success(get_string('postcreated', 'format_timeline'));
+
+        $notification = new notifications($course->id, $course->fullname, $postid, $context);
+        $notification->send_newpost_notifications();
+
+        return [
+            'status' => 'ok',
+            'message' => get_string('postcreated', 'format_timeline')
+        ];
+    }
+
+    /**
+     * Create post return fields
+     *
+     * @return external_single_structure
+     */
+    public static function post_returns() {
+        return new external_single_structure(
+            array(
+                'status' => new external_value(PARAM_TEXT, 'Operation status'),
+                'message' => new external_value(PARAM_RAW, 'Return message')
+            )
+        );
+    }
+
+    /**
+     * Delete post parameters
+     *
+     * @return external_function_parameters
+     */
+    public static function delete_parameters() {
+        return new external_function_parameters([
+            'post' => new external_single_structure([
+                'id' => new external_value(PARAM_INT, 'The post id', VALUE_REQUIRED)
+            ])
+        ]);
+    }
+
+    /**
+     * Delete post method
      *
      * @param $post
      *
@@ -70,21 +163,79 @@ class posts extends external_api {
      * @throws \invalid_parameter_exception
      * @throws \moodle_exception
      */
-    public static function create($post) {
+    public static function delete($post) {
         global $DB, $USER;
 
-        self::validate_parameters(self::create_parameters(), ['post' => $post]);
+        self::validate_parameters(self::delete_parameters(), ['post' => $post]);
+
+        $post = (object)$post;
+
+        $dbpost = $DB->get_record('format_timeline_posts', ['id' => $post->id], '*', MUST_EXIST);
+
+        if (!user::can_delete_post($dbpost, $USER)) {
+            throw new \moodle_exception(get_string('youcantdeletepost', 'format_timeline'));
+        }
+
+        $dbpost->timedeleted = time();
+
+        $DB->update_record('format_timeline_posts', $dbpost);
+
+        return [
+            'status' => 'ok',
+            'message' => get_string('postdeleted', 'format_timeline')
+        ];
+    }
+
+    /**
+     * Delete post return fields
+     *
+     * @return external_single_structure
+     */
+    public static function delete_returns() {
+        return new external_single_structure(
+            array(
+                'status' => new external_value(PARAM_TEXT, 'Operation status'),
+                'message' => new external_value(PARAM_TEXT, 'Return message')
+            )
+        );
+    }
+
+    /**
+     * Create comment parameters
+     *
+     * @return external_function_parameters
+     */
+    public static function comment_parameters() {
+        return new external_function_parameters([
+            'post' => new external_single_structure([
+                'courseid' => new external_value(PARAM_INT, 'The course id', VALUE_REQUIRED),
+                'message' => new external_value(PARAM_RAW, 'The post message', VALUE_REQUIRED),
+                'parent' => new external_value(PARAM_INT, 'The parent post', VALUE_OPTIONAL)
+            ])
+        ]);
+    }
+
+    /**
+     * Create comment method
+     *
+     * @param $post
+     *
+     * @return array
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \invalid_parameter_exception
+     * @throws \moodle_exception
+     */
+    public static function comment($post) {
+        global $DB, $USER;
+
+        self::validate_parameters(self::comment_parameters(), ['post' => $post]);
 
         $post = (object)$post;
 
         $course = $DB->get_record('course', ['id' => $post->courseid], '*', MUST_EXIST);
         $context = context_course::instance($post->courseid);
-
-        if (!$post->parent) {
-            if (!user::can_add_post($context, $USER)) {
-                throw new \moodle_exception(get_string('youcantaddpost', 'format_timeline'));
-            }
-        }
 
         if (!user::can_comment_on_post($context, $USER)) {
             throw new \moodle_exception(get_string('onlyenrolleduserscancomment', 'format_timeline'));
@@ -153,17 +304,6 @@ class posts extends external_api {
             $notification->send_mentions_notifications($userstonotifymention);
         }
 
-        if (!$post->parent) {
-            \core\notification::success(get_string('postcreated', 'format_timeline'));
-
-            $notification->send_newpost_notifications();
-
-            return [
-                'status' => 'ok',
-                'message' => get_string('postcreated', 'format_timeline')
-            ];
-        }
-
         return [
             'status' => 'ok',
             'message' => $post->message
@@ -171,77 +311,15 @@ class posts extends external_api {
     }
 
     /**
-     * Create post return fields
+     * Create comment return fields
      *
      * @return external_single_structure
      */
-    public static function create_returns() {
+    public static function comment_returns() {
         return new external_single_structure(
             array(
                 'status' => new external_value(PARAM_TEXT, 'Operation status'),
                 'message' => new external_value(PARAM_RAW, 'Return message')
-            )
-        );
-    }
-
-    /**
-     * Delete post parameters
-     *
-     * @return external_function_parameters
-     */
-    public static function delete_parameters() {
-        return new external_function_parameters([
-            'post' => new external_single_structure([
-                'id' => new external_value(PARAM_INT, 'The post id', VALUE_REQUIRED)
-            ])
-        ]);
-    }
-
-    /**
-     * Delete post method
-     *
-     * @param $post
-     *
-     * @return array
-     *
-     * @throws \coding_exception
-     * @throws \dml_exception
-     * @throws \invalid_parameter_exception
-     * @throws \moodle_exception
-     */
-    public static function delete($post) {
-        global $DB, $USER;
-
-        self::validate_parameters(self::delete_parameters(), ['post' => $post]);
-
-        $post = (object)$post;
-
-        $dbpost = $DB->get_record('format_timeline_posts', ['id' => $post->id], '*', MUST_EXIST);
-
-        if (!user::can_delete_post($dbpost, $USER)) {
-            throw new \moodle_exception(get_string('youcantdeletepost', 'format_timeline'));
-        }
-
-        $dbpost->timedeleted = time();
-
-        $DB->update_record('format_timeline_posts', $dbpost);
-
-        return [
-            'status' => 'ok',
-            'message' => get_string('postdeleted', 'format_timeline')
-        ];
-    }
-
-    /**
-     * Delete post return fields
-     *
-     * @return external_single_structure
-     */
-    public static function delete_returns() {
-        return new external_single_structure(
-            array(
-                'status' => new external_value(PARAM_TEXT, 'Operation status'),
-                'message' => new external_value(PARAM_TEXT, 'Return message')
             )
         );
     }

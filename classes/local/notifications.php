@@ -42,18 +42,18 @@ class notifications {
     public $coursename;
     /** @var int The post ID. */
     public $postid;
-    /** @var \context_course Course context. */
+    /** @var \context Course context. */
     public $context;
 
     /**
      * Constructor.
      *
-     * @param $courseid
-     * @param $coursename
-     * @param $postid
-     * @param $context
+     * @param int $courseid
+     * @param string $coursename
+     * @param int $postid
+     * @param \context $context
      */
-    public function __construct($courseid, $coursename, $postid, \context_course $context) {
+    public function __construct($courseid, $coursename, $postid, $context) {
         $this->courseid = $courseid;
         $this->coursename = $coursename;
         $this->postid = $postid;
