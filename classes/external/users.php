@@ -84,7 +84,7 @@ class users extends external_api {
             return [];
         }
 
-        $users = user::getall_by_name($search->name, $context);
+        $users = user::getall_by_name($search->name, $course, $context);
 
         $returndata = [];
 

@@ -121,6 +121,17 @@
     font-weight: 700;
 }
 
+.format-timeline .discuss .groupinfo {
+    margin: 0;
+}
+
+.format-timeline .discuss .groupinfo .badge  {
+    border-radius: 10rem;
+    color: #ffffff;
+    margin-right: .2rem;
+    padding: .6em 1em;
+}
+
 .format-timeline .discuss .add-comment {
     display: flex;
     flex-direction: row;

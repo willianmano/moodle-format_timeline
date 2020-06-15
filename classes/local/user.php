@@ -144,9 +144,9 @@ class user {
         list($esql, $enrolledparams) = get_enrolled_sql($context);
 
         $sql = "SELECT $ufields
-              FROM {user} u
-              JOIN ($esql) je ON je.id = u.id
-              WHERE u.id = :userid";
+                FROM {user} u
+                JOIN ($esql) je ON je.id = u.id
+                WHERE u.id = :userid";
 
         $params = array_merge($enrolledparams, ['userid' => $userid]);
 
@@ -157,27 +157,46 @@ class user {
      * Get all users enrolled in a course by name
      *
      * @param string $name
+     * @param \stdClass $course
      * @param context_course $context
      *
      * @return array
      * @throws \dml_exception
      */
-    public static function getall_by_name($name, context_course $context) {
-        global $DB;
+    public static function getall_by_name($name, $course, context_course $context) {
+        global $DB, $USER;
 
         list($ufields, $searchparams, $wherecondition) = self::get_basic_search_conditions($name, $context);
 
         list($esql, $enrolledparams) = get_enrolled_sql($context);
 
         $sql = "SELECT $ufields
-              FROM {user} u
-              JOIN ($esql) je ON je.id = u.id
-              WHERE $wherecondition";
+                FROM {user} u
+                JOIN ($esql) je ON je.id = u.id
+                WHERE $wherecondition";
+
+        $inparams = [];
+        if ($course->groupmode > 0 && (!is_siteadmin() || !has_capability('moodle/course:manageactivities', $context))) {
+            $usergroups = self::get_user_course_groups($USER->id, $course->id);
+
+            if ($usergroups) {
+                list($insql, $inparams) = $DB->get_in_or_equal($usergroups, SQL_PARAMS_NAMED);
+
+                $sql = "SELECT
+                          $ufields
+                        FROM {user} u
+                        JOIN ($esql) je ON je.id = u.id
+                        JOIN {groups_members} gm ON gm.userid = u.id 
+                        WHERE
+                          $wherecondition
+                          AND gm.groupid {$insql}";
+            }
+        }
 
         list($sort, $sortparams) = users_order_by_sql('u');
         $sql = "$sql ORDER BY $sort";
 
-        $params = array_merge($searchparams, $enrolledparams, $sortparams);
+        $params = array_merge($searchparams, $enrolledparams, $sortparams, $inparams);
 
         $users = $DB->get_records_sql($sql, $params, 0, 10);
 
@@ -189,7 +208,7 @@ class user {
     }
 
     /**
-     * Helper method used by {@link getall_by_name()}.
+     * Helper method used by getall_by_name().
      *
      * @param string $search the search term, if any.
      * @param context_course $context course context
@@ -238,5 +257,37 @@ class user {
         $ufields = user_picture::fields('u', $extrafields);
 
         return [$ufields, $params, $wherecondition];
+    }
+
+    /**
+     * Returns the groups ids were the user is in
+     *
+     * @param int $userid
+     * @param int $courseid
+     *
+     * @return array|null
+     *
+     * @throws \dml_exception
+     */
+    public static function get_user_course_groups($userid, $courseid) {
+        global $DB;
+
+        $sql = "SELECT g.id
+                FROM {groups_members} gm
+                JOIN {groups} g ON g.id = gm.groupid
+                WHERE gm.userid = :userid AND g.courseid = :courseid";
+
+        $groups = $DB->get_records_sql($sql, ['userid' => $userid, 'courseid' => $courseid]);
+
+        if (!$groups) {
+            return null;
+        }
+
+        $returngroups = [];
+        foreach ($groups as $group) {
+            $returngroups[] = $group->id;
+        }
+
+        return $returngroups;
     }
 }

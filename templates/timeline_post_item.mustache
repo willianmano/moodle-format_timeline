@@ -39,7 +39,7 @@
         }
     }
 }}
-<div id="discuss-{{pid}}" class="card discuss" data-id="{{pid}}" data-courseid="{{courseid}}">
+<div id="discuss-{{pid}}" class="card discuss" data-id="{{pid}}" data-courseid="{{courseid}}" {{#groupid}}data-groupid="{{{.}}}"{{/groupid}}>
     <div class="card-body">
         <div class="post">
             <div class="userimg">
@@ -51,6 +51,8 @@
                     <p class="text">{{{message}}}</p>
                 </div>
             </div>
+
+            {{#groupname}}<p class="groupinfo"><span class="badge   badge-info">{{{.}}}</span></p>{{/groupname}}
 
             {{#candelete}}
                 <div class="dropdown">

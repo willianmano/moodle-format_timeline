@@ -224,7 +224,7 @@ class timeline implements templatable, renderable {
             (isset($this->viewoptions['filter']) && $this->viewoptions['filter'] == 'showall')) {
             $coursemodules = activities::get_course_activities($this->course, $this->courserenderer);
 
-            $courseposts = posts::get_course_posts($this->course->id);
+            $courseposts = posts::get_course_posts($this->course);
 
             return array_merge($coursemodules, $courseposts);
         }

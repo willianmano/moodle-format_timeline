@@ -24,6 +24,9 @@
 
 namespace format_timeline\local;
 
+use context_course;
+use format_timeline\local\user;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -36,25 +39,24 @@ class posts {
     /**
      * Get all available course posts
      *
-     * @param $courseid
+     * @param \stdClass $course
      *
      * @return array
      *
      * @throws \dml_exception
      */
-    public static function get_course_posts($courseid) {
-        global $DB;
-
+    public static function get_course_posts($course) {
         $userpicfields = \user_picture::fields('u');
 
-        $sql = "SELECT p.id as pid, p.courseid, p.userid, p.message, p.timecreated, {$userpicfields}
-                FROM {format_timeline_posts} p
-                INNER JOIN {user} u ON u.id = p.userid
-                WHERE p.courseid = :courseid AND p.parent IS NULL AND timedeleted IS NULL";
+        $posts = self::get_public_posts($course->id, $userpicfields);
 
-        $params = ['courseid' => $courseid];
+        if ($course->groupmode > 0) {
+            $groupsposts = self::get_groups_posts($course->id, $userpicfields);
 
-        $posts = array_values($DB->get_records_sql($sql, $params));
+            if ($groupsposts) {
+                $posts = array_values(array_merge($posts, $groupsposts));
+            }
+        }
 
         foreach ($posts as $key => $post) {
             $posts[$key]->humantimecreated = userdate($post->timecreated);
@@ -69,16 +71,121 @@ class posts {
         return $posts;
     }
 
+    protected static function get_groups_posts($courseid, $userpicfields) {
+        global $USER, $DB;
+
+        if (is_siteadmin() || has_capability('moodle/course:manageactivities', context_course::instance($courseid))) {
+            return self::get_all_groups_posts($courseid, $userpicfields);
+        }
+
+        $usergroups = user::get_user_course_groups($USER->id, $courseid);
+
+        if ($usergroups) {
+            list($insql, $inparams) = $DB->get_in_or_equal($usergroups, SQL_PARAMS_NAMED);
+
+            $sql = "SELECT
+                      p.id as pid,
+                      p.courseid,
+                      p.userid,
+                      p.message,
+                      p.timecreated,
+                      g.id as groupid,
+                      g.name as groupname,
+                      {$userpicfields}
+                    FROM {format_timeline_posts} p
+                    INNER JOIN {user} u ON u.id = p.userid
+                    INNER JOIN {groups} g ON g.id = p.groupid
+                    WHERE
+                      p.courseid = :courseid
+                      AND p.parent IS NULL
+                      AND p.timedeleted IS NULL
+                      AND p.groupid {$insql}";
+
+            $params = array_merge($inparams, ['courseid' => $courseid]);
+
+            return array_values($DB->get_records_sql($sql, $params));
+        }
+    }
+
+    /**
+     * Get all posts from all groups
+     *
+     * @param int $courseid
+     * @param int $userpicfields
+     *
+     * @return array
+     *
+     * @throws \dml_exception
+     */
+    protected static function get_all_groups_posts($courseid, $userpicfields) {
+        global $DB;
+
+        $sql = "SELECT
+                  p.id as pid,
+                  p.courseid,
+                  p.userid,
+                  p.message,
+                  p.timecreated,
+                  g.id as groupid,
+                  g.name as groupname,
+                  {$userpicfields}
+                FROM {format_timeline_posts} p
+                INNER JOIN {user} u ON u.id = p.userid
+                INNER JOIN {groups} g ON g.id = p.groupid
+                WHERE
+                  p.courseid = :courseid
+                  AND p.parent IS NULL
+                  AND p.timedeleted IS NULL
+                  AND p.groupid IS NOT NULL";
+
+        $params = ['courseid' => $courseid];
+
+        return array_values($DB->get_records_sql($sql, $params));
+    }
+
+    /**
+     * Get posts that are not assigned to any group
+     *
+     * @param int $courseid
+     * @param string $userpicfields
+     *
+     * @return array
+     *
+     * @throws \dml_exception
+     */
+    protected static function get_public_posts($courseid, $userpicfields) {
+        global $DB;
+
+        $sql = "SELECT
+                  p.id as pid,
+                  p.courseid,
+                  p.userid,
+                  p.message,
+                  p.timecreated,
+                  {$userpicfields}
+                FROM {format_timeline_posts} p
+                INNER JOIN {user} u ON u.id = p.userid
+                WHERE
+                  p.courseid = :courseid
+                  AND p.parent IS NULL
+                  AND p.timedeleted IS NULL
+                  AND p.groupid IS NULL";
+
+        $params = ['courseid' => $courseid];
+
+        return array_values($DB->get_records_sql($sql, $params));
+    }
+
     /**
      * Get post children
      *
-     * @param $parentid
+     * @param int $parentid
      *
      * @return array|false
      *
      * @throws \dml_exception
      */
-    public static function get_post_children($parentid) {
+    protected static function get_post_children($parentid) {
         global $DB;
 
         $userpicfields = \user_picture::fields('u');
