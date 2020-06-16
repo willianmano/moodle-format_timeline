@@ -70,6 +70,10 @@ class modinfo {
     public $printcontent = false;
     /** @var string Content. */
     public $content = null;
+    /** @var boolean Content. */
+    public $showintro = false;
+    /** @var string Content. */
+    public $intro = null;
 
     /**
      * Constructor.
@@ -110,6 +114,8 @@ class modinfo {
         $this->humantimecreated = userdate($cminfo->added);
         $this->timecreated = $cminfo->added;
         $this->timemodified = $moddb->timemodified;
+        $this->showintro = $cminfo->showdescription;
+        $this->intro = $cminfo->get_formatted_content();
 
         if ($this->modname == 'label') {
             $this->printcontent = true;
