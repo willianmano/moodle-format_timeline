@@ -236,7 +236,7 @@ class timeline implements templatable, renderable {
 
         // Get only course posts.
         if (isset($this->viewoptions['filter']) && $this->viewoptions['filter'] == 'onlyposts') {
-            return posts::get_course_posts($this->course->id);
+            return posts::get_course_posts($this->course);
         }
     }
 
