@@ -349,11 +349,16 @@
 }
 
 .format-timeline div.timeline ul.section .activity .metahtml {
+    padding: 0;
     text-align: right;
 }
 
 .format-timeline div.timeline ul.section .activity .metahtml .badge {
-    margin-left: .5rem;
+    color: #ffffff;
+}
+
+.format-timeline div.timeline ul.section .activity .metahtml p {
+    margin-bottom: 0;
 }
 
 /* Mentions */

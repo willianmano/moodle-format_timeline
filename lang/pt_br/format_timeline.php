@@ -57,3 +57,7 @@ $string['message_clicktoaccesspost'] = 'Clique aqui para acessar a publicação'
 $string['message_mentioncontextname'] = 'Menção em uma publicação';
 $string['message_mentionuserementioned'] = 'Você foi mencionado em uma publicação';
 $string['message_mentionuserementionedincourse'] = 'Você foi mencionado em uma publicação no curso <b>{$a}</b>';
+
+$string['allowsubmissionsfromdatesummary'] = 'Esta tarefa permitirá envios a partir de <strong>{$a}</strong>';
+$string['allowsubmissionsuntildatesummary'] = 'Esta tarefa permitirá envios até <strong>{$a}</strong>';
+$string['allowsubmissionscutoffdatesummary'] = 'Você está atrasado mas pode enviar até <strong>{$a}</strong>';

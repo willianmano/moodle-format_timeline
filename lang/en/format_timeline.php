@@ -57,3 +57,7 @@ $string['message_clicktoaccesspost'] = 'Click here to access the post';
 $string['message_mentioncontextname'] = 'Mention in a post.';
 $string['message_mentionuserementioned'] = 'You were mentioned in a post';
 $string['message_mentionuserementionedincourse'] = 'You were mentioned in a post in the course <b>{$a}</b>';
+
+$string['allowsubmissionsfromdatesummary'] = 'This assignment will accept submissions from <strong>{$a}</strong>';
+$string['allowsubmissionsuntildatesummary'] = 'This assignment will accept submissions until <strong>{$a}</strong>';
+$string['allowsubmissionscutoffdatesummary'] = 'You are delayed but can submit until <strong>{$a}</strong>';

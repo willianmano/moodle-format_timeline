@@ -75,6 +75,8 @@ class modinfo {
     /** @var string Content. */
     public $intro = null;
 
+    public $submissionstatus = "";
+
     /**
      * Constructor.
      *
@@ -121,5 +123,43 @@ class modinfo {
             $this->printcontent = true;
             $this->content = $cminfo->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
         }
+
+        if ($this->modname == 'assign') {
+            $instance = $DB->get_record('assign', ['id' => $cminfo->instance]);
+
+            $this->get_submission_status($instance->allowsubmissionsfromdate, $instance->duedate, $instance->cutoffdate);
+        }
+    }
+
+    protected function get_submission_status($allowsubmissionsfromdate, $duedate, $cutoffdate) {
+        if ($allowsubmissionsfromdate > time()) {
+            $this->submissionstatus = "<span class='badge badge-danger'>not opened yet</span>";
+
+            $date = userdate($allowsubmissionsfromdate);
+            $this->submissionstatusextra = \html_writer::tag('p', get_string('allowsubmissionsfromdatesummary', 'format_timeline', $date));
+
+            return;
+        }
+
+        if ($cutoffdate < time()) {
+            $this->submissionstatus = "<span class='badge badge-danger'>closed</span>";
+            $this->submissionstatusextra = '';
+
+            return;
+        }
+
+        if ($duedate < time()) {
+            $this->submissionstatus = "<span class='badge badge-warning'>delayed</span>";
+
+            $date = userdate($duedate);
+            $this->submissionstatusextra = \html_writer::tag('p', get_string('allowsubmissionscutoffdatesummary', 'format_timeline', $date));
+
+            return;
+        }
+
+        $this->submissionstatus = "<span class='badge badge-success'>open to submit</span>";
+
+        $date = userdate($duedate);
+        $this->submissionstatusextra = \html_writer::tag('p', get_string('allowsubmissionsuntildatesummary', 'format_timeline', $date));
     }
 }
