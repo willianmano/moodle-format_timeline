@@ -63,7 +63,7 @@ class user {
      * @param $user
      * @param $page
      *
-     * @return \moodle_url
+     * @return string
      *
      * @throws \coding_exception
      */
@@ -72,7 +72,7 @@ class user {
 
         $userimg->size = true;
 
-        return $userimg->get_url($page);
+        return $userimg->get_url($page)->out();
     }
 
     /**

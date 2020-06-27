@@ -25,10 +25,18 @@
 defined('MOODLE_INTERNAL') || die();
 
 $functions = [
+    'format_timeline_getpostcomments' => [
+        'classname' => 'format_timeline\external\posts',
+        'classpath' => 'course/format/timeline/classes/external/posts.php',
+        'methodname' => 'getcomments',
+        'description' => 'Retrieves all the post comments',
+        'type' => 'read',
+        'ajax' => true
+    ],
     'format_timeline_createpost' => [
         'classname' => 'format_timeline\external\posts',
         'classpath' => 'course/format/timeline/classes/external/posts.php',
-        'methodname' => 'post',
+        'methodname' => 'create',
         'description' => 'Creates a new post',
         'type' => 'write',
         'ajax' => true

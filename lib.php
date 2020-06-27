@@ -29,8 +29,7 @@ require_once($CFG->dirroot . '/course/format/lib.php');
 /**
  * Main class for the Timeline course format
  */
-class format_timeline extends format_base
-{
+class format_timeline extends format_base {
     /**
      * Returns true if this course format uses sections
      *

@@ -89,16 +89,19 @@
 {{#js}}
     require([
         'format_timeline/createpost',
-        'format_timeline/createcomment',
         'format_timeline/deletepost',
+        'format_timeline/createcomment',
+        'format_timeline/loadcomments',
         'format_timeline/tribute_init',
         'format_timeline/fixanchoroffset'],
-    function(CreatePost, CreateComment, DeletePost, TributeInit, FixAnchorOffset) {
+    function(CreatePost, DeletePost, CreateComment, LoadComments, TributeInit, FixAnchorOffset) {
         CreatePost.init('[data-action=createpostmodal]', {{contextid}});
+
+        DeletePost.init();
 
         CreateComment.init();
 
-        DeletePost.init();
+        LoadComments.init();
 
         TributeInit.init();
 

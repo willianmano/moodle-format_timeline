@@ -36,16 +36,22 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class posts {
+
+    /** @const int Post children limit. */
+    const CHILDREN_LIMIT = 5;
+
     /**
      * Get all available course posts
      *
      * @param \stdClass $course
+     * @param boolean $limit
      *
      * @return array
      *
      * @throws \dml_exception
+     * @throws \coding_exception
      */
-    public static function get_course_posts($course) {
+    public static function get_course_posts($course, $limit = true) {
         $userpicfields = \user_picture::fields('u');
 
         $posts = self::get_public_posts($course->id, $userpicfields);
@@ -61,10 +67,15 @@ class posts {
         foreach ($posts as $key => $post) {
             $posts[$key]->humantimecreated = userdate($post->timecreated);
 
-            $children = self::get_post_children($post->pid);
+            $children = self::get_post_children($post->pid, $limit);
 
             if ($children) {
+                $childrencount = self::count_post_children($post->pid);
+
                 $posts[$key]->children = $children;
+                $posts[$key]->childrencount = $childrencount;
+                $posts[$key]->childdiff = $childrencount - self::CHILDREN_LIMIT;
+                $posts[$key]->hasmorechildren = $childrencount > self::CHILDREN_LIMIT ? true : false;
             }
         }
 
@@ -135,7 +146,7 @@ class posts {
                 WHERE
                   p.courseid = :courseid
                   AND p.parent IS NULL
-                  AND p.timedeleted IS NULL
+                  AND p.timedeleted IS NULL 
                   AND p.groupid IS NOT NULL";
 
         $params = ['courseid' => $courseid];
@@ -180,13 +191,20 @@ class posts {
      * Get post children
      *
      * @param int $parentid
+     * @param boolean $limit
+     * @param \stdClass $page
      *
      * @return array|false
      *
      * @throws \dml_exception
+     * @throws \coding_exception
      */
-    protected static function get_post_children($parentid) {
-        global $DB;
+    public static function get_post_children($parentid, $limit = true, $page = null) {
+        global $DB, $PAGE;
+
+        if (!$page) {
+            $page = $PAGE;
+        }
 
         $userpicfields = \user_picture::fields('u');
 
@@ -196,14 +214,38 @@ class posts {
                 WHERE p.parent = :parent AND timedeleted IS NULL
                 ORDER BY pid ASC";
 
+        if ($limit) {
+            $sql .= " limit " . self::CHILDREN_LIMIT;
+        }
+
         $params = ['parent' => $parentid];
 
         $posts = $DB->get_records_sql($sql, $params);
 
         if ($posts) {
+            foreach ($posts as $key => $post) {
+                $posts[$key]->fullname = fullname($post);
+                $posts[$key]->userpic = user::get_userpic($post, $page);
+            }
+
             return array_values($posts);
         }
 
         return false;
+    }
+
+    /**
+     * Returns the post children count
+     *
+     * @param $parentid
+     *
+     * @return int
+     *
+     * @throws \dml_exception
+     */
+    protected static function count_post_children($parentid) {
+        global $DB;
+
+        return $DB->count_records('format_timeline_posts', ['parent' => $parentid]);
     }
 }

@@ -41,7 +41,7 @@
 }}
 <div id="discuss-{{pid}}" class="card discuss" data-id="{{pid}}" data-courseid="{{courseid}}" {{#groupid}}data-groupid="{{{.}}}"{{/groupid}}>
     <div class="card-body">
-        <div class="post">
+        <div class="post mainpost">
             <div class="userimg">
                 <img src="{{{userpic}}}">
             </div>
@@ -76,6 +76,12 @@
                 </div>
             </div>
         {{/children}}
+
+        {{#hasmorechildren}}
+            <div class="loadmore">
+                <a href="#" class="loadallcomments btn btn-outline-primary" data-id="{{pid}}">{{#str}}loadmore, format_timeline, {{childdiff}}{{/str}}</a>
+            </div>
+        {{/hasmorechildren}}
 
         {{#cancommentonposts}}
             <div class="add-comment">

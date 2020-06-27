@@ -75,37 +75,46 @@
     margin-top: 0;
 }
 
-.format-timeline .discuss .userimg {
+.format-timeline .discuss .loadmore {
+    margin-top: 1rem;
+    font-weight: 700;
+}
+
+.format-timeline .discuss .loadmore .loadallcomments {
+    border-radius: 20px;
+}
+
+.format-timeline .discuss .post .userimg {
     align-self: flex-start;
     position: relative;
     display: block;
 }
 
-.format-timeline .discuss .userimg img {
+.format-timeline .discuss .post .userimg img {
     display: inline;
     width: 42px;
     border-radius: 50%;
     border: 1px solid #ededed;
 }
 
-.format-timeline .discuss .entry {
+.format-timeline .discuss .post .entry {
     flex: 1;
     padding-left: .4rem;
 }
 
-.format-timeline .discuss .entry .entry-content {
+.format-timeline .discuss .post .entry .entry-content {
     padding: .5rem 1rem;
     border-radius: 1rem;
     background-color: #ededed;
     display: inline-block;
 }
 
-.format-timeline .discuss .entry .entry-content .name {
+.format-timeline .discuss .post .entry .entry-content .name {
     font-weight: 700;
     margin-bottom: 0;
 }
 
-.format-timeline .discuss .entry .entry-content .name .small {
+.format-timeline .discuss .post .entry .entry-content .name .small {
     font-size: 70%;
     margin-bottom: 0;
     border: 1px solid #c3c3c3;
@@ -113,11 +122,11 @@
     padding: 0 4px;
 }
 
-.format-timeline .discuss .entry .entry-content .text {
+.format-timeline .discuss .post .entry .entry-content .text {
     margin-bottom: 0;
 }
 
-.format-timeline .discuss .entry .entry-content .text a {
+.format-timeline .discuss .post .entry .entry-content .text a {
     font-weight: 700;
 }
 
@@ -136,8 +145,8 @@
     display: flex;
     flex-direction: row;
     border-top: 1px solid #ededed;
-    margin-top: 1.25rem;
-    padding-top: 1.25rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
 }
 
 .format-timeline .discuss .add-comment .userimg {

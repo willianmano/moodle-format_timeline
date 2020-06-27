@@ -62,6 +62,7 @@ class timeline_post_item implements templatable, renderable {
      * @param renderer_base $output
      *
      * @return array|\stdClass
+     * @throws \coding_exception
      */
     public function export_for_template(renderer_base $output) {
         // User image who created the post.
@@ -78,14 +79,6 @@ class timeline_post_item implements templatable, renderable {
 
         // Get the user fullname.
         $this->item->fullname = fullname($this->item);
-
-        if (isset($this->item->children)) {
-            foreach ($this->item->children as $key => $child) {
-                $this->item->children[$key]->fullname = fullname($child);
-                $this->item->children[$key]->humantimecreated = userdate($child->timecreated);
-                $this->item->children[$key]->userpic = user::get_userpic($child, $this->page);
-            }
-        }
 
         return $this->item;
     }

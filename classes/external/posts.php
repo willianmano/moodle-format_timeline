@@ -29,6 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 use external_api;
 use external_value;
 use external_single_structure;
+use external_multiple_structure;
 use external_function_parameters;
 use context_course;
 use format_timeline\local\forms\createpost_form;
@@ -50,7 +51,7 @@ class posts extends external_api {
      *
      * @return external_function_parameters
      */
-    public static function post_parameters() {
+    public static function create_parameters() {
         return new external_function_parameters([
             'contextid' => new external_value(PARAM_INT, 'The context id for the course'),
             'jsonformdata' => new external_value(PARAM_RAW, 'The data from the post form, encoded as a json array')
@@ -70,11 +71,11 @@ class posts extends external_api {
      * @throws \invalid_parameter_exception
      * @throws \moodle_exception
      */
-    public static function post($contextid, $jsonformdata) {
+    public static function create($contextid, $jsonformdata) {
         global $DB, $USER;
 
         // We always must pass webservice params through validate_parameters.
-        $params = self::validate_parameters(self::post_parameters(),
+        $params = self::validate_parameters(self::create_parameters(),
             ['contextid' => $contextid, 'jsonformdata' => $jsonformdata]);
 
         $context = context::instance_by_id($params['contextid'], MUST_EXIST);
@@ -129,7 +130,7 @@ class posts extends external_api {
      *
      * @return external_single_structure
      */
-    public static function post_returns() {
+    public static function create_returns() {
         return new external_single_structure(
             array(
                 'status' => new external_value(PARAM_TEXT, 'Operation status'),
@@ -196,6 +197,88 @@ class posts extends external_api {
             array(
                 'status' => new external_value(PARAM_TEXT, 'Operation status'),
                 'message' => new external_value(PARAM_TEXT, 'Return message')
+            )
+        );
+    }
+
+    /**
+     * Get comments parameters
+     *
+     * @return external_function_parameters
+     */
+    public static function getcomments_parameters() {
+        return new external_function_parameters([
+            'post' => new external_single_structure([
+                'id' => new external_value(PARAM_INT, 'The post id', VALUE_REQUIRED)
+            ])
+        ]);
+    }
+
+    /**
+     * Returns all post comments
+     *
+     * @param $post
+     *
+     * @return array
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \invalid_parameter_exception
+     * @throws \moodle_exception
+     */
+    public static function getcomments($post) {
+        global $DB;
+
+        self::validate_parameters(self::getcomments_parameters(), ['post' => $post]);
+
+        $post = (object)$post;
+
+        $dbpost = $DB->get_record('format_timeline_posts', ['id' => $post->id], '*', MUST_EXIST);
+
+        $context = context_course::instance($dbpost->courseid);
+
+        if (!user::can_comment_on_post($context)) {
+            throw new \moodle_exception(get_string('onlyenrolleduserscanviewposts', 'format_timeline'));
+        }
+
+        $page = new \moodle_page();
+        $page->set_context($context);
+
+        $comments = \format_timeline\local\posts::get_post_children($dbpost->id, false, $page);
+
+        if (!$comments) {
+            return [];
+        }
+
+        $returndata = [];
+        foreach ($comments as $comment) {
+            $returndata[] = [
+                'userpic' => $comment->userpic,
+                'fullname' => $comment->fullname,
+                'message' => $comment->message
+            ];
+        }
+
+        return ['comments' => $returndata];
+    }
+
+    /**
+     * Delete post return fields
+     *
+     * @return external_single_structure
+     */
+    public static function getcomments_returns() {
+        return new external_function_parameters(
+            array(
+                'comments' => new external_multiple_structure(
+                    new external_single_structure(
+                        array(
+                            'userpic' => new external_value(PARAM_TEXT, 'The user picture url'),
+                            'fullname' => new external_value(PARAM_TEXT, "The user fullname"),
+                            'message' => new external_value(PARAM_RAW, "The comment message")
+                        )
+                    )
+                )
             )
         );
     }

@@ -113,12 +113,19 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
     CreateComment.prototype.addCommentToDiscuss = function(discussdiv, value) {
         var userimg = discussdiv.find('.add-comment .userimg').clone();
         var userfullname = userimg.attr('alt');
+        var loadallcomments = discussdiv.find('.loadmore');
 
-        $("<div class='post fadeIn'><div class='userimg'>" + $('<div/>').append(userimg).html() + "</div>" +
+        var comment = $("<div class='post fadeIn'><div class='userimg'>" + $('<div/>').append(userimg).html() + "</div>" +
           "<div class='entry'><div class='entry-content'>" +
           "<p class='name'>" + userfullname + "</p>" +
           "<p class='text'>" + value + "</p>" +
-          "</div></div></div>").insertBefore(discussdiv.find('.add-comment'));
+          "</div></div></div>");
+
+        if (loadallcomments.length > 0  ) {
+            comment.insertBefore(loadallcomments);
+        } else {
+            comment.insertBefore(discussdiv.find('.add-comment'));
+        }
     };
 
     return {

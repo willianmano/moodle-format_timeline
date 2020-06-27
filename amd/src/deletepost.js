@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification', 'core/ajax', 'format_timeline/sweetalert'], function($, Notification, Ajax, Swal) {
+define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, Swal) {
     var DeletePost = function() {
         this.registerEventListeners();
     };
