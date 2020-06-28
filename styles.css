@@ -10,6 +10,9 @@
 .format-timeline .header-section,
 .format-timeline .filters-section {
     background-color: #eef5f9;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .format-timeline .filters-section {
@@ -19,7 +22,6 @@
 
 .format-timeline .filters-section a {
     text-decoration: none !important;
-    color: #373a3c;
 }
 
 .format-timeline .filters-section a,
@@ -59,8 +61,11 @@
 
 /* Timeline posts. */
 .format-timeline .discuss {
-    margin-top: .5rem;
+    margin-top: 1rem;
     border-style: dashed;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .format-timeline .discuss .post {
@@ -260,10 +265,13 @@
 }
 
 .format-timeline div.timeline ul.section .activity {
-    margin: .5rem 0 0 0;
+    margin: 1rem 0 0 0;
     padding: .5rem 1rem;
     border: 1px solid #d7dfe3;
     border-left: 4px solid #1177d1;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 .format-timeline div.timeline ul.section .activity.modtype_book,
@@ -272,7 +280,7 @@
 .format-timeline div.timeline ul.section .activity.modtype_imscp,
 .format-timeline div.timeline ul.section .activity.modtype_page,
 .format-timeline div.timeline ul.section .activity.modtype_url {
-    border-left: 4px solid #5bc0de;
+    border-left: 4px solid #343a40;
 }
 
 .format-timeline div.timeline ul.section .activity.modtype_label {

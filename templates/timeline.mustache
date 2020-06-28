@@ -43,7 +43,7 @@
 </div>
 
 {{#hasactions}}
-    <div class="header-section card">
+    <div class="header-section card shadow-sm">
         <div class="card-body">
             {{#userinfo}}
                 <div class="userwelcome">
@@ -62,14 +62,14 @@
     </div>
 {{/hasactions}}
 
-<div class="card filters-section">
+<div class="card filters-section shadow-sm">
     <div class="card-body">
 
         {{#filterlinks}}
             {{{orderlink}}}
 
             <div class="dropdown">
-                <a href="#" class="dropdown-toggle" id="filter-activities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{#pix}}i/filter{{/pix}} {{#str}}filter{{/str}}</a>
+                <a href="#" class="dropdown-toggle btn btn-outline-primary" id="filter-activities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{#pix}}i/filter{{/pix}} {{#str}}filter{{/str}}</a>
                 <div class="dropdown-menu" aria-labelledby="filter-activities">
                     <a class="dropdown-item" href="{{{showall}}}"><i class="fa fa-list"></i> {{#str}}showall, format_timeline{{/str}}</a>
                     <a class="dropdown-item" href="{{{onlyactivities}}}"><i class="fa fa-check-square-o"></i> {{#str}}onlyactivities, format_timeline{{/str}}</a>

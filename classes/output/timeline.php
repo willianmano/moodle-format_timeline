@@ -126,7 +126,7 @@ class timeline implements templatable, renderable {
      * @throws \coding_exception
      */
     private function get_link_order() {
-        $ordertext = '<i class="fa fa-sort"></i> ';
+        $ordertext = '<i class="fa fa-sort-desc"></i> ';
 
         $url = $this->page->url;
 
@@ -142,14 +142,15 @@ class timeline implements templatable, renderable {
 
         if (isset($this->viewoptions['order']) && $this->viewoptions['order'] == 'desc') {
             $this->page->url->order = 'asc';
+            $ordertext = '<i class="fa fa-sort-asc"></i> ';
             $ordertext .= get_string('orderasc', 'format_timeline');
 
-            return html_writer::link($url, $ordertext);
+            return html_writer::link($url, $ordertext, ['class' => 'btn btn-outline-primary']);
         }
 
         $ordertext .= get_string('orderdesc', 'format_timeline');
 
-        return html_writer::link($url, $ordertext);
+        return html_writer::link($url, $ordertext, ['class' => 'btn btn-outline-primary']);
     }
 
     /**

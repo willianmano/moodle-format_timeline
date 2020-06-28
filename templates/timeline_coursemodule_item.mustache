@@ -45,7 +45,7 @@
     </div>
 {{/printcontent}}
 {{^printcontent}}
-    <li class="{{type}} {{modname}} modtype_{{modname}} {{^visible}}ishidden{{/visible}}">
+    <li class="shadow-sm {{type}} {{modname}} modtype_{{modname}} {{^visible}}ishidden{{/visible}}">
         <div class="activity-header">
             <div class="activity-info">
                 <p class="activity-name">{{modfullname}}</p>
@@ -77,9 +77,9 @@
         </div>
 
         <div class="metahtml">
-            {{{submissionstatus}}}
+            {{{activitystatus}}}
 
-            {{{submissionstatusextra}}}
+            {{{activitystatusextra}}}
         </div>
     </li>
 {{/printcontent}}

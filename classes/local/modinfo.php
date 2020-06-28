@@ -27,6 +27,7 @@ namespace format_timeline\local;
 defined('MOODLE_INTERNAL') || die();
 
 use cm_info;
+use format_timeline\local\activities\assign;
 use moodle_url;
 
 /**
@@ -75,7 +76,9 @@ class modinfo {
     /** @var string Content. */
     public $intro = null;
 
-    public $submissionstatus = "";
+    public $activitystatus;
+    public $activitystatusextra;
+    public $activitysubmissionstatus;
 
     /**
      * Constructor.
@@ -84,6 +87,9 @@ class modinfo {
      * @param null $editicons
      * @param null $completionbox
      * @param null $availability
+     *
+     * @throws \dml_exception
+     * @throws \moodle_exception
      */
     public function __construct(cm_info $cminfo, $editicons = null, $completionbox = null, $availability = null) {
         $this->editicons = $editicons;
@@ -127,39 +133,11 @@ class modinfo {
         if ($this->modname == 'assign') {
             $instance = $DB->get_record('assign', ['id' => $cminfo->instance]);
 
-            $this->get_submission_status($instance->allowsubmissionsfromdate, $instance->duedate, $instance->cutoffdate);
+            $activity = new assign($instance, $cminfo->context);
+
+            $this->activitystatus = $activity->status;
+            $this->activitystatusextra = $activity->statusextra;
+            $this->activitysubmissionstatus = $activity->submissionstatus;
         }
-    }
-
-    protected function get_submission_status($allowsubmissionsfromdate, $duedate, $cutoffdate) {
-        if ($allowsubmissionsfromdate > time()) {
-            $this->submissionstatus = "<span class='badge badge-danger'>not opened yet</span>";
-
-            $date = userdate($allowsubmissionsfromdate);
-            $this->submissionstatusextra = \html_writer::tag('p', get_string('allowsubmissionsfromdatesummary', 'format_timeline', $date));
-
-            return;
-        }
-
-        if ($cutoffdate < time()) {
-            $this->submissionstatus = "<span class='badge badge-danger'>closed</span>";
-            $this->submissionstatusextra = '';
-
-            return;
-        }
-
-        if ($duedate < time()) {
-            $this->submissionstatus = "<span class='badge badge-warning'>delayed</span>";
-
-            $date = userdate($duedate);
-            $this->submissionstatusextra = \html_writer::tag('p', get_string('allowsubmissionscutoffdatesummary', 'format_timeline', $date));
-
-            return;
-        }
-
-        $this->submissionstatus = "<span class='badge badge-success'>open to submit</span>";
-
-        $date = userdate($duedate);
-        $this->submissionstatusextra = \html_writer::tag('p', get_string('allowsubmissionsuntildatesummary', 'format_timeline', $date));
     }
 }
