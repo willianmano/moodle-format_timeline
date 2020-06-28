@@ -49,7 +49,7 @@ class assign {
         }
 
         if ($allowsubmissionsfromdate > time()) {
-            $this->status = "<span class='badge badge-danger'>not opened yet</span>";
+            $this->status = "<span class='badge badge-danger'>".get_string('notopenedyet', 'format_timeline')."</span>";
 
             $date = userdate($allowsubmissionsfromdate);
             $this->statusextra = \html_writer::tag('p', get_string('allowsubmissionsfromdatesummary', 'format_timeline', $date));
@@ -64,7 +64,7 @@ class assign {
         }
 
         if ($cutoffdate < time()) {
-            $this->status = "<span class='badge badge-danger'>closed</span>";
+            $this->status = "<span class='badge badge-danger'>".get_string('closed', 'format_timeline')."</span>";
             $this->status .= " <span class='badge badge-dark'>".get_string('submissionstatus_' . $this->submissionstatus, 'assign')."</span>";
             $this->statusextra = '';
 
@@ -72,7 +72,7 @@ class assign {
         }
 
         if ($duedate < time()) {
-            $this->status = "<span class='badge badge-warning'>delayed</span>";
+            $this->status = "<span class='badge badge-warning'>".get_string('delayed', 'format_timeline')."</span>";
             $this->status .= " <span class='badge badge-dark'>".get_string('submissionstatus_' . $this->submissionstatus, 'assign')."</span>";
 
             $date = userdate($duedate);
@@ -81,7 +81,7 @@ class assign {
             return;
         }
 
-        $this->status = "<span class='badge badge-success'>open to submit</span>";
+        $this->status = "<span class='badge badge-success'>".get_string('open', 'format_timeline')."</span>";
         $this->status .= " <span class='badge badge-dark'>".get_string('submissionstatus_' . $this->submissionstatus, 'assign')."</span>";
 
         $date = userdate($duedate);
