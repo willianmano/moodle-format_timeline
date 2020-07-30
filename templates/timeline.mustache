@@ -92,9 +92,8 @@
         'format_timeline/deletepost',
         'format_timeline/createcomment',
         'format_timeline/loadcomments',
-        'format_timeline/tribute_init',
-        'format_timeline/fixanchoroffset'],
-    function(CreatePost, DeletePost, CreateComment, LoadComments, TributeInit, FixAnchorOffset) {
+        'format_timeline/tribute_init'],
+    function(CreatePost, DeletePost, CreateComment, LoadComments, TributeInit) {
         CreatePost.init('[data-action=createpostmodal]', {{contextid}});
 
         DeletePost.init();
@@ -104,7 +103,5 @@
         LoadComments.init();
 
         TributeInit.init();
-
-        FixAnchorOffset.init();
     });
 {{/js}}

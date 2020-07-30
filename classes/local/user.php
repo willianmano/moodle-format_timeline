@@ -90,6 +90,40 @@ class user {
     }
 
     /**
+     * Checks if user can view a post
+     *
+     * @param \stdClass $post
+     * @param int $userid
+     *
+     * @return bool
+     *
+     * @throws \coding_exception
+     */
+    public static function can_view_post($post, $userid = null) {
+        global $USER;
+
+        if (is_null($userid)) {
+            $userid = $USER->id;
+        }
+
+        $context = context_course::instance($post->courseid);
+
+        if (is_siteadmin() || has_capability('moodle/course:manageactivities', $context)) {
+            return true;
+        }
+
+        if (!is_enrolled($context)) {
+            return false;
+        }
+
+        if ($post->groupid && !groups_is_member($post->groupid, $userid)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Check if the user can delete a post into the course
      *
      * @param $post

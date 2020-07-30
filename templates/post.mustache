@@ -20,70 +20,52 @@
     Create post modal template
 
     Example context (json): {
-        "pid": 2,
+        "id": 2,
         "courseid": 7,
         "userpic": "http://...",
         "fullname": "User fullname",
         "humantimecreated": "Monday, 8 June 2020, 3:50 pm",
         "message": "The post message",
-        "candelete": true,
         "children": [{
             "userpic": "http://...",
             "fullname": "User fullname",
             "message": "The post message"
         }],
-        "cancommentonposts": true,
         "loggedinuserinfo": {
             "img": "http://...",
             "fullname": "User fullname",
         }
     }
 }}
-<div id="discuss-{{pid}}" class="card discuss" data-id="{{pid}}" data-courseid="{{courseid}}" {{#groupid}}data-groupid="{{{.}}}"{{/groupid}}>
-    <div class="card-body">
-        <div class="post mainpost">
-            <div class="userimg">
-                <img src="{{{userpic}}}">
-            </div>
-            <div class="entry">
-                <div class="entry-content">
-                    <p class="name">{{fullname}} <span class="small">{{humantimecreated}}</span></p>
-                    <p class="text">{{{message}}}</p>
-                </div>
-            </div>
-
-            {{#groupname}}<p class="groupinfo"><span class="badge badge-info">{{{.}}}</span></p>{{/groupname}}
-
-            {{#candelete}}
-                <div class="dropdown">
-                    <a href="#" class="dropdown-toggle" id="dropdownMenuButton-{{pid}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{#pix}}a/setting{{/pix}}</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{pid}}">
-                        <a class="dropdown-item delete-post" data-id="{{pid}}" href="#"><i class="fa fa-trash-o"></i> Excluir publicação</a>
-                    </div>
-                </div>
-            {{/candelete}}
-        </div>
-        {{#children}}
-            <div class="post">
+<div id="timeline-main" data-courseid="{{courseid}}">
+    <div id="discuss-{{id}}" class="card discuss" data-id="{{id}}" data-courseid="{{courseid}}" {{#groupid}}data-groupid="{{{.}}}"{{/groupid}}>
+        <div class="card-body">
+            <div class="post mainpost">
                 <div class="userimg">
                     <img src="{{{userpic}}}">
                 </div>
                 <div class="entry">
                     <div class="entry-content">
-                        <p class="name">{{fullname}}</p>
+                        <p class="name">{{fullname}} <span class="small">{{humantimecreated}}</span></p>
                         <p class="text">{{{message}}}</p>
                     </div>
                 </div>
-            </div>
-        {{/children}}
 
-        {{#hasmorechildren}}
-            <div class="loadmore">
-                <a href="#" class="loadallcomments btn btn-outline-primary" data-id="{{pid}}"><i class="fa fa-plus-circle"></i> {{#str}}loadmore, format_timeline, {{childdiff}}{{/str}}</a>
+                {{#groupname}}<p class="groupinfo"><span class="badge badge-info">{{{.}}}</span></p>{{/groupname}}
             </div>
-        {{/hasmorechildren}}
-
-        {{#cancommentonposts}}
+            {{#children}}
+                <div class="post">
+                    <div class="userimg">
+                        <img src="{{{userpic}}}">
+                    </div>
+                    <div class="entry">
+                        <div class="entry-content">
+                            <p class="name">{{fullname}}</p>
+                            <p class="text">{{{message}}}</p>
+                        </div>
+                    </div>
+                </div>
+            {{/children}}
             <div class="add-comment">
                 {{#loggedinuserinfo}}
                     <img src="{{{img}}}" class="userimg" alt="{{fullname}}">
@@ -98,6 +80,20 @@
                     </div>
                 </div>
             </div>
-        {{/cancommentonposts}}
+        </div>
     </div>
 </div>
+
+{{#js}}
+    require([
+    'format_timeline/deletepost',
+    'format_timeline/createcomment',
+    'format_timeline/tribute_init'],
+    function(DeletePost, CreateComment, TributeInit) {
+        DeletePost.init();
+
+        CreateComment.init();
+
+        TributeInit.init();
+    });
+{{/js}}

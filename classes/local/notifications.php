@@ -116,7 +116,7 @@ class notifications {
         $newpostinacourse = get_string('message_newpostinacourse', 'format_timeline');
         $clicktoaccesspost = get_string('message_clicktoaccesspost', 'format_timeline');
 
-        $url = new moodle_url("/course/view.php?id={$this->courseid}#discuss-{$this->postid}");
+        $url = new moodle_url("/course/format/timeline/post.php?id={$this->postid}");
 
         $message = new message();
         $message->component = 'format_timeline';
@@ -174,7 +174,7 @@ class notifications {
         $youwerementionedincourse = get_string('message_mentionuserementionedincourse', 'format_timeline', $this->coursename);
         $clicktoaccesspost = get_string('message_clicktoaccesspost', 'format_timeline');
 
-        $url = new moodle_url("/course/view.php?id={$this->courseid}#discuss-{$this->postid}");
+        $url = new moodle_url("/course/format/timeline/post.php?id={$this->postid}");
 
         $message = new message();
         $message->component = 'format_timeline';
