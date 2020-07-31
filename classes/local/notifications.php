@@ -92,7 +92,15 @@ class notifications {
      * @return array
      */
     protected function get_users_to_notify() {
-        $users = get_enrolled_users($this->context);
+        global $DB;
+
+        $post = $DB->get_record('format_timeline_posts', ['id' => $this->postid]);
+
+        if ($post->groupid) {
+            $users = get_enrolled_users($this->context, '', $post->groupid);
+        } else {
+            $users = get_enrolled_users($this->context);
+        }
 
         if (!$users) {
             return [];
