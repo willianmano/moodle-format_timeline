@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Timeline course format for moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * This file contains main class for the course format timeline social
  *
  * @package    format_timeline
- * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -28,6 +28,9 @@ require_once($CFG->dirroot . '/course/format/lib.php');
 
 /**
  * Main class for the Timeline course format
+ *
+ * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_timeline extends format_base {
     /**
@@ -135,6 +138,13 @@ class format_timeline extends format_base {
     }
 }
 
+/**
+ * Fragment used in add post modal
+ *
+ * @param $args
+ *
+ * @return string
+ */
 function format_timeline_output_fragment_createpost_form($args) {
     $args = (object) $args;
     $context = $args->context;

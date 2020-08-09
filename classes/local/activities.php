@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Timeline course format for moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Timeline Social course format.
+ * Timeline Social course format
  *
  * @package    format_timeline
- * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,9 +34,9 @@ use action_link;
 use pix_icon;
 
 /**
- * Activities class.
+ * Activities class
  *
- * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class activities {
@@ -89,7 +89,7 @@ class activities {
      * @see course_get_cm_edit_actions()
      *
      * @param action_link[] $actions Array of action_link objects
-     * @param $courserenderer The course renderer
+     * @param $courserenderer Course renderer
      * @param cm_info $mod The module we are displaying actions for.
      *
      * @return string
@@ -121,6 +121,7 @@ class activities {
             }
             $menu->add($action);
         }
+
         $menu->attributes['class'] .= ' section-cm-edit-actions commands';
 
         // Prioritise the menu ahead of all other actions.

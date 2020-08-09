@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Timeline course format for moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Timeline main class renderer.
+ * Timeline main class renderer
  *
  * @package    format_timeline
- * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -36,9 +36,9 @@ use html_writer;
 use url_select;
 
 /**
- * Timeline renderer class.
+ * Timeline renderer class
  *
- * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class timeline implements templatable, renderable {
@@ -75,6 +75,8 @@ class timeline implements templatable, renderable {
      * @param renderer_base $output
      *
      * @return array|\stdClass
+     *
+     * @throws \coding_exception
      */
     public function export_for_template(renderer_base $output) {
         global $USER;
@@ -185,6 +187,10 @@ class timeline implements templatable, renderable {
      * Get and filter the course posts, activities and resources
      *
      * @return string
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \moodle_exception
      */
     protected function get_course_timeline_items() {
         global $USER;
@@ -218,6 +224,10 @@ class timeline implements templatable, renderable {
      * Get all course items based on filters
      *
      * @return array
+     *
+     * @throws \coding_exception
+     * @throws \dml_exception
+     * @throws \moodle_exception
      */
     protected function get_timelineitems() {
         // Get all course activities and posts.
@@ -266,7 +276,7 @@ class timeline implements templatable, renderable {
     /**
      * Renders HTML for the menus to add activities and resources to the current course
      *
-     * @param stdClass $course
+     * @param \stdClass $course
      * @param int $section relative section number (field course_sections.section)
      * @param int $sectionreturn The section to link back to
      * @param array $displayoptions additional display options, for example blocks add
@@ -403,9 +413,9 @@ class timeline implements templatable, renderable {
     /**
      * Build the HTML for the module chooser javascript popup
      *
-     * @param array $modules A set of modules as returned form @see
-     * get_module_metadata
+     * @param array $modules A set of modules as returned form @see get_module_metadata
      * @param object $course The course that will be displayed
+     *
      * @return string The composed HTML for the module
      */
     private function course_modchooser($modules, $course) {

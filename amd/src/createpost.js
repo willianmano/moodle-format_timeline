@@ -64,9 +64,6 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
                 // Keep a reference to the modal.
                 this.modal = modal;
 
-                // Forms are big, we want a big modal.
-                // this.modal.setLarge();
-
                 // We want to reset the form every time it is opened.
                 this.modal.getRoot().on(ModalEvents.hidden, function() {
                     this.modal.setBody(this.getBody());
@@ -76,7 +73,6 @@ define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/f
                 this.modal.getRoot().on(ModalEvents.shown, function() {
                     this.modal.getRoot().append('<style>[data-fieldtype=submit] { display: none ! important; }</style>');
                 }.bind(this));
-
 
                 // We catch the modal save event, and use it to submit the form inside the modal.
                 // Triggering a form submission will give JS validation scripts a chance to check for errors.

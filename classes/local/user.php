@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Timeline course format for moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  * Timeline user info.
  *
  * @package    format_timeline
- * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -30,9 +30,9 @@ use user_picture;
 use context_course;
 
 /**
- * User info class.
+ * User info class
  *
- * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
+ * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class user {
@@ -196,6 +196,7 @@ class user {
      *
      * @return array
      * @throws \dml_exception
+     * @throws \coding_exception
      */
     public static function getall_by_name($name, $course, context_course $context) {
         global $DB, $USER;
@@ -220,7 +221,7 @@ class user {
                           $ufields
                         FROM {user} u
                         JOIN ($esql) je ON je.id = u.id
-                        JOIN {groups_members} gm ON gm.userid = u.id 
+                        JOIN {groups_members} gm ON gm.userid = u.id
                         WHERE
                           $wherecondition
                           AND gm.groupid {$insql}";
@@ -246,6 +247,7 @@ class user {
      *
      * @param string $search the search term, if any.
      * @param context_course $context course context
+     *
      * @return array with three elements:
      *     string list of fields to SELECT,
      *     array query params. Note that the SQL snippets use named parameters,
