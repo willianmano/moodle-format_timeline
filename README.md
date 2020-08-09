@@ -7,7 +7,7 @@ About this project
 
 This is a crowdfunding project financed by the power and help of the Moodle community.
 
-Initial donator
+Donators
 ==========================
 
 Special thanks for you all, you made this happen. S2
