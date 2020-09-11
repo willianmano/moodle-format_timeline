@@ -89,9 +89,9 @@ class timeline implements templatable, renderable {
         $canaddpost = user::can_add_post($this->page->context, $USER);
         $timelineitems = $this->get_course_timeline_items();
 
-        $hasactions = true;
-        if (!$openactivitychoooser && !$canaddpost) {
-            $hasactions = false;
+        $hasactions = false;
+        if ($openactivitychoooser && $canaddpost) {
+            $hasactions = true;
         }
 
         return [
