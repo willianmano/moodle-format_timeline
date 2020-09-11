@@ -20,10 +20,56 @@
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+define(['jquery', 'core/ajax', 'core/str', 'format_timeline/sweetalert'], function($, Ajax, Str, Swal) {
+    var STRINGS = {
+        CONFIRM_TITLE: 'Are you sure?',
+        CONFIRM_MSG: 'Once deleted, the post cannot be recovered!',
+        CONFIRM_YES: 'Yes, delete it!',
+        CONFIRM_NO: 'Cancel',
+        SUCCESS: 'Post successfully deleted.'
+    };
 
-define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, Swal) {
+    var componentStrings = [
+        {
+            key: 'deletepost_confirm_title',
+            component: 'format_timeline'
+        },
+        {
+            key: 'deletepost_confirm_msg',
+            component: 'format_timeline'
+        },
+        {
+            key: 'deletepost_confirm_yes',
+            component: 'format_timeline'
+        },
+        {
+            key: 'deletepost_confirm_no',
+            component: 'format_timeline'
+        },
+        {
+            key: 'deletepost_success',
+            component: 'format_timeline'
+        },
+    ];
+
     var DeletePost = function() {
+        this.getStrings();
+
         this.registerEventListeners();
+    };
+
+    DeletePost.prototype.getStrings = function() {
+        var stringsPromise = Str.get_strings(componentStrings);
+
+        $.when(stringsPromise).done(function(strings) {
+            STRINGS.CONFIRM_TITLE = strings[0];
+            STRINGS.CONFIRM_MSG = strings[1];
+            STRINGS.CONFIRM_YES = strings[2];
+            STRINGS.CONFIRM_NO = strings[3];
+            STRINGS.SUCCESS = strings[4];
+
+            console.log(STRINGS);
+        });
     };
 
     DeletePost.prototype.registerEventListeners = function() {
@@ -33,14 +79,14 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
             var eventTarget = $(event.currentTarget);
 
             Swal.fire({
-                title: 'Você tem certeza disso?',
-                text: "Depois de excluída a publicação não poderá ser recuperada!",
+                title: STRINGS.CONFIRM_TITLE,
+                text: STRINGS.CONFIRM_MSG,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim, pode excluir!',
-                cancelButtonText: 'Cancelar'
+                confirmButtonText: STRINGS.CONFIRM_YES,
+                cancelButtonText: STRINGS.CONFIRM_NO
             }).then(function(result) {
                 if (result.value) {
                     this.deletePost(eventTarget);
@@ -79,7 +125,7 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
             $(this).remove();
         });
 
-        this.showToast('success', 'Publicação excluída com sucesso.');
+        this.showToast('success', STRINGS.SUCCESS);
     };
 
     DeletePost.prototype.showToast = function(type, message) {

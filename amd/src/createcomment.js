@@ -56,7 +56,7 @@ define(['jquery', 'core/ajax', 'format_timeline/sweetalert'], function($, Ajax, 
         postinput.empty();
 
         if (discussdiv.length === 0 || discussdiv.length > 1) {
-            this.showToast('error', 'Erro ao tentar localizar a discussão para este comentário.');
+            this.showToast('error', 'Error trying to find the discussion for this comment.');
 
             return;
         }
