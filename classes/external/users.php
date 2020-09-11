@@ -59,7 +59,7 @@ class users extends external_api {
     /**
      * Get the list of all course's users
      *
-     * @param $search
+     * @param array $search
      *
      * @return array
      *
@@ -128,8 +128,8 @@ class users extends external_api {
     /**
      * Get basic search conditions
      *
-     * @param $search
-     * @param $context
+     * @param string $search
+     * @param object $context
      *
      * @return array
      */

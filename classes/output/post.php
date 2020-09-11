@@ -45,8 +45,8 @@ class post implements templatable, renderable {
     /**
      * Post constructor
      *
-     * @param $post
-     * @param $page
+     * @param \stdClass $post
+     * @param \stdClass $page
      */
     public function __construct($post, $page) {
         $this->post = $post;

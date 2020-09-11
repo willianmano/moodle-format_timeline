@@ -33,9 +33,9 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class assign {
-    /** @var |stdClass Module instance. */
+    /** @var \stdClass Module instance. */
     protected $instance;
-    /** @var |context Context instance. */
+    /** @var \context Context instance. */
     protected $context;
     /** @var string Activity status. */
     public $status;
@@ -47,8 +47,8 @@ class assign {
     /**
      * Assign constructor
      *
-     * @param $instance
-     * @param $context
+     * @param \stdClass $instance
+     * @param \context $context
      *
      * @throws \coding_exception
      * @throws \dml_exception
@@ -65,9 +65,9 @@ class assign {
     /**
      * Returns activity status meta info
      *
-     * @param $allowsubmissionsfromdate
-     * @param $duedate
-     * @param $cutoffdate
+     * @param string $allowsubmissionsfromdate
+     * @param string $duedate
+     * @param string $cutoffdate
      *
      * @throws \coding_exception
      */

@@ -58,9 +58,9 @@ class timeline implements templatable, renderable {
     /**
      * Timeline constructor.
      *
-     * @param $course
-     * @param $page
-     * @param null $viewoptions
+     * @param \stdClass $course
+     * @param \stdClass $page
+     * @param array $viewoptions
      */
     public function __construct($course, $page, $viewoptions = null) {
         $this->course = $course;
@@ -254,7 +254,7 @@ class timeline implements templatable, renderable {
     /**
      * Order timeline items
      *
-     * @param $timelineitems
+     * @param array $timelineitems
      *
      * @return mixed
      */
@@ -385,7 +385,7 @@ class timeline implements templatable, renderable {
     /**
      * Verify if ajax is enabled
      *
-     * @param $course
+     * @param \stdClass $course
      *
      * @return bool
      */

@@ -39,8 +39,8 @@ class user {
     /**
      * Get user info
      *
-     * @param $user
-     * @param $page
+     * @param \stdClass $user
+     * @param \stdClass $page
      *
      * @return array
      *
@@ -60,8 +60,8 @@ class user {
     /**
      * Get user picture
      *
-     * @param $user
-     * @param $page
+     * @param \stdClass $user
+     * @param \stdClass $page
      *
      * @return string
      *
@@ -78,8 +78,8 @@ class user {
     /**
      * Check if the user can add a post into the course
      *
-     * @param $context
-     * @param null $user
+     * @param \context $context
+     * @param \stdClass $user
      *
      * @return bool
      *
@@ -126,8 +126,8 @@ class user {
     /**
      * Check if the user can delete a post into the course
      *
-     * @param $post
-     * @param null $user
+     * @param \stdClass $post
+     * @param \stdClass $user
      *
      * @return bool
      */
@@ -152,8 +152,8 @@ class user {
     /**
      * Check if the user can comment in a course post
      *
-     * @param $context
-     * @param null $user
+     * @param \context $context
+     * @param \stdClass $user
      *
      * @return bool
      */

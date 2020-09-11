@@ -38,8 +38,8 @@ class createpost_form extends \moodleform {
     /**
      * Class constructor.
      *
-     * @param $formdata
-     * @param null $customodata
+     * @param array $formdata
+     * @param array $customodata
      */
     public function __construct($formdata, $customodata = null) {
         parent::__construct(null, $customodata, 'post',  '', null, true, $formdata);

@@ -104,7 +104,7 @@ class format_timeline extends format_base {
     /**
      * Whether this format allows to delete sections
      *
-     * Do not call this function directly, instead use {@link course_can_delete_section()}
+     * Do not call this function directly, instead use course_can_delete_section()
      *
      * @param int|stdClass|section_info $section
      * @return bool
@@ -141,7 +141,7 @@ class format_timeline extends format_base {
 /**
  * Fragment used in add post modal
  *
- * @param $args
+ * @param array $args
  *
  * @return string
  */

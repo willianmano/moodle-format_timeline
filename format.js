@@ -1,5 +1,5 @@
 // Javascript functions for Timeline course format.
-
+/* eslint-disable */
 M.course = M.course || {};
 
 M.course.format = M.course.format || {};

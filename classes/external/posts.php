@@ -155,7 +155,7 @@ class posts extends external_api {
     /**
      * Delete post method
      *
-     * @param $post
+     * @param array $post
      *
      * @return array
      *
@@ -217,7 +217,7 @@ class posts extends external_api {
     /**
      * Returns all post comments
      *
-     * @param $post
+     * @param array $post
      *
      * @return array
      *
@@ -301,7 +301,7 @@ class posts extends external_api {
     /**
      * Create comment method
      *
-     * @param $post
+     * @param array $post
      *
      * @return array
      *

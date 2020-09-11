@@ -24,7 +24,7 @@
 }
 
 .format-timeline .filters-section a {
-    text-decoration: none !important;
+    text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -48,7 +48,7 @@
 
 .format-timeline .buttons .btn {
     text-decoration: none;
-    color: #ffffff;
+    color: #fff;
     margin-right: .5rem;
 }
 
@@ -57,8 +57,8 @@
 }
 
 .format-timeline .buttons .addresourcemodchooser a {
-    text-decoration: none !important;
-    color: #ffffff;
+    text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
+    color: #fff;
 }
 
 .format-timeline .buttons a:last-of-type {
@@ -83,7 +83,7 @@
 }
 
 .format-timeline .discuss .post:first-of-type,
-#page-course-format-post .discuss .post:first-of-type{
+#page-course-format-post .discuss .post:first-of-type {
     padding-left: 0;
     margin-top: 0;
 }
@@ -156,10 +156,10 @@
     margin: 0;
 }
 
-.format-timeline .discuss .groupinfo .badge ,
-#page-course-format-post .discuss .groupinfo .badge  {
+.format-timeline .discuss .groupinfo .badge,
+#page-course-format-post .discuss .groupinfo .badge {
     border-radius: 10rem;
-    color: #ffffff;
+    color: #fff;
     margin-right: .2rem;
     padding: .6em 1em;
 }
@@ -202,9 +202,9 @@
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #ced4da;
-    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    -o-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -webkit-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    -o-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     outline: none;
     min-height: 32px;
     cursor: text;
@@ -216,8 +216,8 @@
     background-color: #fff;
     border-color: #6eb5f3;
     outline: 0;
-    -webkit-box-shadow: 0 0 0 0.2rem rgba(17,119,209,.25);
-    box-shadow: 0 0 0 0.2rem rgba(17,119,209,.25);
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(17, 119, 209, .25);
+    box-shadow: 0 0 0 0.2rem rgba(17, 119, 209, .25);
 }
 
 .format-timeline .discuss .add-comment .post-comment-input[contenteditable="true"]:empty:before,
@@ -263,20 +263,43 @@
 
 /* Some animations. */
 @-webkit-keyframes format-timeline_fadein {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
+
 @-moz-keyframes format-timeline_fadein {
-    0% { opacity: 0;}
-    100% { opacity: 1; }
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
+
 @-o-keyframes format-timeline_fadein {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
+
 @keyframes format-timeline_fadein {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* Activity list. */
@@ -316,7 +339,7 @@
 
 .format-timeline div.timeline ul.section .activity.ishidden {
     border-left: 4px solid #868e96;
-    background-color: rgba(0, 0, 0, .05);;
+    background-color: rgba(0, 0, 0, .05);
 }
 
 .format-timeline div.timeline ul.section .activity.ishidden a {
@@ -351,7 +374,7 @@
 }
 
 .format-timeline div.timeline ul.section .activity .activity-header .editicons a {
-    text-decoration: none !important;
+    text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
 }
 
 .format-timeline div.timeline ul.section .activity .activity-header .editicons a .icon {
@@ -388,7 +411,7 @@
 }
 
 .format-timeline div.timeline ul.section .activity .metahtml .badge {
-    color: #ffffff;
+    color: #fff;
 }
 
 .format-timeline div.timeline ul.section .activity .metahtml p {
@@ -416,7 +439,7 @@
     padding: 0;
     list-style: none;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
@@ -437,7 +460,7 @@
 
 .format-timeline .tribute-container li.highlight,
 #page-course-format-post .tribute-container li.highlight {
-    color: #ffffff !important;
+    color: #fff !important; /* stylelint-disable-line declaration-no-important */
     background-color: #1177d1;
 }
 

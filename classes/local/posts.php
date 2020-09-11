@@ -37,7 +37,7 @@ defined('MOODLE_INTERNAL') || die();
  */
 class posts {
 
-    /** @const int Post children limit. */
+    /** @var int Post children limit. */
     const CHILDREN_LIMIT = 5;
 
     /**
@@ -85,8 +85,8 @@ class posts {
     /**
      * Returns the groups's posts
      *
-     * @param $courseid
-     * @param $userpicfields
+     * @param int $courseid
+     * @param string $userpicfields
      *
      * @return array
      *
@@ -248,7 +248,7 @@ class posts {
     /**
      * Returns the post children count
      *
-     * @param $parentid
+     * @param int $parentid
      *
      * @return int
      *

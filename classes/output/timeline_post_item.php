@@ -46,9 +46,9 @@ class timeline_post_item implements templatable, renderable {
     /**
      * Constructor.
      *
-     * @param $post
-     * @param $page
-     * @param $loggedinuserinfo
+     * @param \stdClass $post
+     * @param \stdClass $page
+     * @param \stdClass $loggedinuserinfo
      */
     public function __construct($post, $page, $loggedinuserinfo) {
         $this->item = $post;

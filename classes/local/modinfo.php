@@ -71,13 +71,15 @@ class modinfo {
     public $printcontent = false;
     /** @var string Content. */
     public $content = null;
-    /** @var boolean Content. */
+    /** @var boolean Show intro. */
     public $showintro = false;
-    /** @var string Content. */
+    /** @var string Intro content. */
     public $intro = null;
-
+    /** @var string Status. */
     public $activitystatus;
-    public $activitystatusextra;
+    /** @var string Extra data. */
+    public $activitystatusextra
+    /** @var string Submission status. */;
     public $activitysubmissionstatus;
 
     /**

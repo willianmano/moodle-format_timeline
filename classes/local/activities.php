@@ -43,8 +43,8 @@ class activities {
     /**
      * Get all course activities
      *
-     * @param $course
-     * @param $courserenderer
+     * @param \stdClass $course
+     * @param object $courserenderer
      *
      * @return array
      *
@@ -89,7 +89,7 @@ class activities {
      * @see course_get_cm_edit_actions()
      *
      * @param action_link[] $actions Array of action_link objects
-     * @param $courserenderer Course renderer
+     * @param object $courserenderer Course renderer
      * @param cm_info $mod The module we are displaying actions for.
      *
      * @return string
