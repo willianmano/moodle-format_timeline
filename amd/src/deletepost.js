@@ -67,8 +67,6 @@ define(['jquery', 'core/ajax', 'core/str', 'format_timeline/sweetalert'], functi
             STRINGS.CONFIRM_YES = strings[2];
             STRINGS.CONFIRM_NO = strings[3];
             STRINGS.SUCCESS = strings[4];
-
-            console.log(STRINGS);
         });
     };
 
