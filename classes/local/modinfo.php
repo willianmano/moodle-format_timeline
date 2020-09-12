@@ -78,8 +78,8 @@ class modinfo {
     /** @var string Status. */
     public $activitystatus;
     /** @var string Extra data. */
-    public $activitystatusextra
-    /** @var string Submission status. */;
+    public $activitystatusextra;
+    /** @var string Submission status. */
     public $activitysubmissionstatus;
 
     /**

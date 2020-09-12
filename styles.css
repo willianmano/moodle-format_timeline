@@ -274,7 +274,7 @@
 
 @-moz-keyframes format-timeline_fadein {
     0% {
-        opacity: 0
+        opacity: 0;
     }
 
     100% {
