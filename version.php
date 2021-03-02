@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021030100;
-$plugin->requires  = 2020061501;
+$plugin->version   = 2021030200;
+$plugin->requires  = 2020110900;
 $plugin->component = 'format_timeline';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = '1.0.1';
+$plugin->release   = '1.0.2';
