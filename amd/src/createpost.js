@@ -20,6 +20,7 @@
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 define(['jquery', 'core/str', 'core/modal_factory', 'core/modal_events', 'core/fragment', 'core/ajax', 'core/yui'],
     function($, Str, ModalFactory, ModalEvents, Fragment, Ajax, Y) {
         /**

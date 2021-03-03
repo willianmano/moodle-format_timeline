@@ -20,6 +20,7 @@
  * @copyright  2020 onwards Willian Mano {@link http://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 define(['jquery', 'core/ajax', 'core/str', 'format_timeline/sweetalert'], function($, Ajax, Str, Swal) {
     var STRINGS = {
         CONFIRM_TITLE: 'Are you sure?',
