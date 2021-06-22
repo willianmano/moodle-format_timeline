@@ -69,17 +69,13 @@
                 {{/showintro}}
             </div>
 
-            <div class="actions">
-                {{{completionbox}}}
-            </div>
-
             {{{availability}}}
         </div>
 
-        <div class="metahtml">
-            {{{activitystatus}}}
-
-            {{{activitystatusextra}}}
-        </div>
+        {{#activityinformation}}
+            <div class="metahtml">
+                {{{ activityinformation }}}
+            </div>
+        {{/activityinformation}}
     </li>
 {{/printcontent}}

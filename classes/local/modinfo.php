@@ -63,8 +63,6 @@ class modinfo {
     public $timemodified;
     /** @var string Edit icons. */
     public $editicons;
-    /** @var string Completion box. */
-    public $completionbox;
     /** @var boolean Course module availability. */
     public $availability;
     /** @var boolean Course content is printable ex. label. */
@@ -82,20 +80,20 @@ class modinfo {
     /** @var string Submission status. */
     public $activitysubmissionstatus;
 
+    public $activityinformation;
+
     /**
      * Constructor.
      *
      * @param cm_info $cminfo
      * @param null $editicons
-     * @param null $completionbox
      * @param null $availability
      *
      * @throws \dml_exception
      * @throws \moodle_exception
      */
-    public function __construct(cm_info $cminfo, $editicons = null, $completionbox = null, $availability = null) {
+    public function __construct(cm_info $cminfo, $editicons = null, $availability = null) {
         $this->editicons = $editicons;
-        $this->completionbox = $completionbox;
         $this->availability = $availability;
         $this->get_module_metadata($cminfo);
     }
@@ -109,7 +107,7 @@ class modinfo {
      * @throws \moodle_exception
      */
     public function get_module_metadata(cm_info $cminfo) {
-        global $DB;
+        global $DB, $USER, $OUTPUT;
 
         $moddb = $DB->get_record($cminfo->modname, ['id' => $cminfo->instance], '*', MUST_EXIST);
 
@@ -132,14 +130,19 @@ class modinfo {
             $this->content = $cminfo->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
         }
 
-        if ($this->modname == 'assign') {
-            $instance = $DB->get_record('assign', ['id' => $cminfo->instance]);
+        $completiondetails = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id);
+        $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
+        $activityinformation = $OUTPUT->activity_information($cminfo, $completiondetails, $activitydates);
 
-            $activity = new assign($instance, $cminfo->context);
-
-            $this->activitystatus = $activity->status;
-            $this->activitystatusextra = $activity->statusextra;
-            $this->activitysubmissionstatus = $activity->submissionstatus;
-        }
+        $this->activityinformation = $activityinformation;
+//        if ($this->modname == 'assign') {
+//            $instance = $DB->get_record('assign', ['id' => $cminfo->instance]);
+//
+//            $activity = new assign($instance, $cminfo->context);
+//
+//            $this->activitystatus = $activity->status;
+//            $this->activitystatusextra = $activity->statusextra;
+//            $this->activitysubmissionstatus = $activity->submissionstatus;
+//        }
     }
 }

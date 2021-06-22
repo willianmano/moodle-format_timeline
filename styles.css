@@ -399,6 +399,7 @@
 .format-timeline div.timeline ul.section .activity .availabilityinfo {
     margin-left: 0;
     border-top: 1px solid #d7dfe3;
+    padding-top: 1rem;
 }
 
 .format-timeline div.timeline ul.section .activity .availabilityinfo ul {
@@ -406,8 +407,9 @@
 }
 
 .format-timeline div.timeline ul.section .activity .metahtml {
-    padding: 0;
-    text-align: right;
+    padding: 1rem 0;
+    border-top: 1px solid #d7dfe3;
+    margin-top: 1rem;
 }
 
 .format-timeline div.timeline ul.section .activity .metahtml .badge {

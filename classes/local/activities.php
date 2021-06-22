@@ -72,11 +72,9 @@ class activities {
                 $editicons = self::course_section_cm_edit_actions($editactions, $courserenderer, $mod);
                 $editicons .= $mod->afterediticons;
 
-                $completionbox = $courserenderer->course_section_cm_completion($course, $completioninfo, $mod);
-
                 $availability = $courserenderer->course_section_cm_availability($mod);
 
-                $coursemodules[] = new modinfo($mod, $editicons, $completionbox, $availability);
+                $coursemodules[] = new modinfo($mod, $editicons, $availability);
             }
         }
 
