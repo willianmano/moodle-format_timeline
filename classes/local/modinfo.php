@@ -27,7 +27,6 @@ namespace format_timeline\local;
 defined('MOODLE_INTERNAL') || die();
 
 use cm_info;
-use format_timeline\local\activities\assign;
 use moodle_url;
 
 /**
@@ -135,14 +134,5 @@ class modinfo {
         $activityinformation = $OUTPUT->activity_information($cminfo, $completiondetails, $activitydates);
 
         $this->activityinformation = $activityinformation;
-//        if ($this->modname == 'assign') {
-//            $instance = $DB->get_record('assign', ['id' => $cminfo->instance]);
-//
-//            $activity = new assign($instance, $cminfo->context);
-//
-//            $this->activitystatus = $activity->status;
-//            $this->activitystatusextra = $activity->statusextra;
-//            $this->activitysubmissionstatus = $activity->submissionstatus;
-//        }
     }
 }

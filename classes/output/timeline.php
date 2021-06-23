@@ -434,13 +434,13 @@ class timeline implements templatable, renderable {
     private function course_ajax_enabled($course) {
         global $PAGE, $SITE;
 
-        // Check that the theme suports
+        // Check that the theme suports.
         if (!$PAGE->theme->enablecourseajax) {
             return false;
         }
 
-        // Check that the course format supports ajax functionality
-        // The site 'format' doesn't have information on course format support
+        // Check that the course format supports ajax functionality.
+        // The site 'format' doesn't have information on course format support.
         if ($SITE->id !== $course->id) {
             $courseformatajaxsupport = course_format_ajax_support($course->format);
             if (!$courseformatajaxsupport->capable) {
@@ -448,7 +448,7 @@ class timeline implements templatable, renderable {
             }
         }
 
-        // All conditions have been met so course ajax should be enabled
+        // All conditions have been met so course ajax should be enabled.
         return true;
     }
 }
