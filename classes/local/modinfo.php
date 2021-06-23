@@ -78,7 +78,7 @@ class modinfo {
     public $activitystatusextra;
     /** @var string Submission status. */
     public $activitysubmissionstatus;
-
+    /** @var string Activity info dates and status. */
     public $activityinformation;
 
     /**
