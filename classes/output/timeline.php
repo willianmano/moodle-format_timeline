@@ -33,7 +33,7 @@ use renderable;
 use renderer_base;
 use context_course;
 use html_writer;
-use url_select;
+use moodle_page;
 
 /**
  * Timeline renderer class
@@ -44,12 +44,12 @@ use url_select;
 class timeline implements templatable, renderable {
     /** @var \stdClass The course object. */
     protected $course;
-    /** @var \stdClass The page object. */
-    protected $page;
+    /** @var moodle_page The page object. */
+    protected moodle_page $page;
     /** @var \stdClass The course renderer. */
     protected $courserenderer;
-    /** @var \stdClass The output renderer. */
-    protected $output;
+    /** @var renderer_base The output renderer. */
+    protected renderer_base $output;
     /** @var \stdClass The current user info. */
     protected $userinfo;
     /** @var \stdClass The view options. */
@@ -62,7 +62,7 @@ class timeline implements templatable, renderable {
      * @param \stdClass $page
      * @param array $viewoptions
      */
-    public function __construct($course, $page, $viewoptions = null) {
+    public function __construct($course, moodle_page $page, $viewoptions = null) {
         $this->course = $course;
         $this->page = $page;
         $this->viewoptions = $viewoptions;
@@ -284,124 +284,21 @@ class timeline implements templatable, renderable {
      * @return string
      */
     private function get_activitychooser($course, $section = 0, $sectionreturn = null, $displayoptions = []) {
-        global $CFG, $USER;
-
-        // The returned control HTML can be one of the following:
-        // - Only the non-ajax control (select menus of activities and resources) with a noscript fallback for non js clients.
-        // - Only the ajax control (the link which when clicked produces the activity chooser modal). No noscript fallback.
-        // - [Behat only]: The non-ajax control and optionally the ajax control (depending on site settings). If included, the link
-        // takes priority and the non-ajax control is wrapped in a <noscript>.
-        // Behat requires the third case because some features run with JS, some do not. We must include the noscript fallback.
-        $behatsite = defined('BEHAT_SITE_RUNNING');
-        $nonajaxcontrol = '';
-        $ajaxcontrol = '';
-        $courseajaxenabled = $this->course_ajax_enabled($course);
-        $userchooserenabled = get_user_preferences('usemodchooser', $CFG->modchooserdefault);
-        $sectionname = get_section_name($course, $section);
-
-        // Decide what combination of controls to output:
-        // During behat runs, both controls can be used in conjunction to provide non-js fallback.
-        // During normal use only one control or the other will be output. No non-js fallback is needed.
-        $rendernonajaxcontrol = $behatsite || !$courseajaxenabled || !$userchooserenabled || $course->id != $this->page->course->id;
-        $renderajaxcontrol = $courseajaxenabled && $userchooserenabled && $course->id == $this->page->course->id;
-
-        // The non-ajax control, which includes an entirely non-js (<noscript>) fallback too.
-        if ($rendernonajaxcontrol) {
-            $vertical = !empty($displayoptions['inblock']);
-
-            // Check to see if user can add menus.
-            if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))
-                || !($modnames = get_module_types_names()) || empty($modnames)) {
-                return '';
-            }
-
-            // Retrieve all modules with associated metadata.
-            $contentitemservice = \core_course\local\factory\content_item_service_factory::get_content_item_service();
-            $urlparams = ['section' => $section];
-            if (!is_null($sectionreturn)) {
-                $urlparams['sr'] = $sectionreturn;
-            }
-            $modules = $contentitemservice->get_content_items_for_user_in_course($USER, $course, $urlparams);
-
-            // Return if there are no content items to add.
-            if (empty($modules)) {
-                return '';
-            }
-
-            // We'll sort resources and activities into two lists.
-            $activities = array(MOD_CLASS_ACTIVITY => array(), MOD_CLASS_RESOURCE => array());
-
-            foreach ($modules as $module) {
-                $activityclass = MOD_CLASS_ACTIVITY;
-                if ($module->archetype == MOD_ARCHETYPE_RESOURCE) {
-                    $activityclass = MOD_CLASS_RESOURCE;
-                } else if ($module->archetype === MOD_ARCHETYPE_SYSTEM) {
-                    // System modules cannot be added by user, do not add to dropdown.
-                    continue;
-                }
-                $link = $module->link;
-                $activities[$activityclass][$link] = $module->title;
-            }
-
-            $straddactivity = get_string('addactivity');
-            $straddresource = get_string('addresource');
-            $strresourcelabel = get_string('addresourcetosection', null, $sectionname);
-            $stractivitylabel = get_string('addactivitytosection', null, $sectionname);
-
-            $nonajaxcontrol = html_writer::start_tag('div', array('class' => 'section_add_menus', 'id' => 'add_menus-section-'
-                . $section));
-
-            if (!$vertical) {
-                $nonajaxcontrol .= html_writer::start_tag('div', array('class' => 'horizontal'));
-            }
-
-            if (!empty($activities[MOD_CLASS_RESOURCE])) {
-                $select = new url_select($activities[MOD_CLASS_RESOURCE], '', array('' => $straddresource), "ressection$section");
-                $select->set_help_icon('resources');
-                $select->set_label($strresourcelabel, array('class' => 'accesshide'));
-                $nonajaxcontrol .= $this->output->render($select);
-            }
-
-            if (!empty($activities[MOD_CLASS_ACTIVITY])) {
-                $select = new url_select($activities[MOD_CLASS_ACTIVITY], '', array('' => $straddactivity), "section$section");
-                $select->set_help_icon('activities');
-                $select->set_label($stractivitylabel, array('class' => 'accesshide'));
-                $nonajaxcontrol .= $this->output->render($select);
-            }
-
-            if (!$vertical) {
-                $nonajaxcontrol .= html_writer::end_tag('div');
-            }
-
-            $nonajaxcontrol .= html_writer::end_tag('div');
+        // Check to see if user can add menus.
+        if (!has_capability('moodle/course:manageactivities', context_course::instance($course->id))) {
+            return '';
         }
 
-        // The ajax control - the 'Add an activity or resource' link.
-        if ($renderajaxcontrol) {
-            // The module chooser link.
-            $straddeither = "<i class='fa fa-plus-circle'></i> " . get_string('addresourceoractivity');
+        $data = [
+            'sectionid' => $section,
+            'sectionreturn' => $sectionreturn
+        ];
+        $ajaxcontrol = $this->output->render_from_template('format_timeline/activitychooserbutton', $data);
 
-            $ajaxcontrol .= html_writer::tag('button', $straddeither, array(
-                'class' => 'section-modchooser-link btn btn-success',
-                'data-action' => 'open-chooser',
-                'data-sectionid' => $section,
-                'data-sectionreturnid' => $sectionreturn,
-            ));
+        // Load the JS for the modal.
+        $this->course_activitychooser($course->id);
 
-            // Load the JS for the modal.
-            $courseactivitychooser = $this->course_activitychooser($course->id);
-        }
-
-        // Behat only: If both controls are being included in the HTML,
-        // show the link by default and only fall back to the selects if js is disabled.
-        if ($behatsite && $renderajaxcontrol) {
-            $nonajaxcontrol = html_writer::tag('div', $nonajaxcontrol, array('class' => 'hiddenifjs addresourcedropdown'));
-            $ajaxcontrol = html_writer::tag('div', $ajaxcontrol, array('class' => 'visibleifjs addresourcemodchooser'));
-        }
-
-        // If behat is running, we should have the non-ajax control + the ajax control.
-        // Otherwise, we'll have one or the other.
-        return $ajaxcontrol . $nonajaxcontrol . $courseactivitychooser;
+        return $ajaxcontrol;
     }
 
     /**

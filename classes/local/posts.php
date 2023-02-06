@@ -52,12 +52,13 @@ class posts {
      * @throws \coding_exception
      */
     public static function get_course_posts($course, $limit = true) {
-        $userpicfields = \user_picture::fields('u');
+        $userfields = \core_user\fields::for_userpic();
+        $userpicfields = $userfields->get_sql('u', false, '', '', false);
 
-        $posts = self::get_public_posts($course->id, $userpicfields);
+        $posts = self::get_public_posts($course->id, $userpicfields->selects);
 
         if ($course->groupmode > 0) {
-            $groupsposts = self::get_groups_posts($course->id, $userpicfields);
+            $groupsposts = self::get_groups_posts($course->id, $userpicfields->selects);
 
             if ($groupsposts) {
                 $posts = array_values(array_merge($posts, $groupsposts));
@@ -75,7 +76,7 @@ class posts {
                 $posts[$key]->children = $children;
                 $posts[$key]->childrencount = $childrencount;
                 $posts[$key]->childdiff = $childrencount - self::CHILDREN_LIMIT;
-                $posts[$key]->hasmorechildren = $childrencount > self::CHILDREN_LIMIT ? true : false;
+                $posts[$key]->hasmorechildren = $childrencount > self::CHILDREN_LIMIT;
             }
         }
 
@@ -217,9 +218,10 @@ class posts {
             $page = $PAGE;
         }
 
-        $userpicfields = \user_picture::fields('u');
+        $userfields = \core_user\fields::for_userpic();
+        $userpicfields = $userfields->get_sql('u', false, '', '', false);
 
-        $sql = "SELECT p.id as pid, p.message, p.timecreated, {$userpicfields}
+        $sql = "SELECT p.id as pid, p.message, p.timecreated, {$userpicfields->selects}
                 FROM {format_timeline_posts} p
                 INNER JOIN {user} u ON u.id = p.userid
                 WHERE p.parent = :parent AND timedeleted IS NULL

@@ -32,7 +32,7 @@ require_once($CFG->dirroot . '/course/format/lib.php');
  * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_timeline extends format_base {
+class format_timeline extends core_courseformat\base {
     /**
      * Returns true if this course format uses sections
      *
@@ -153,7 +153,7 @@ function format_timeline_output_fragment_createpost_form($args) {
     $formdata = [];
     if (!empty($args->jsonformdata)) {
         $serialiseddata = json_decode($args->jsonformdata);
-        parse_str($serialiseddata, $formdata);
+        $formdata = (array)$serialiseddata;
     }
 
     list($ignored, $course) = get_context_info_array($context->id);

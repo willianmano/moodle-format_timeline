@@ -173,11 +173,9 @@ class user {
     public static function get_by_id($userid, context_course $context) {
         global $DB;
 
-        $ufields = user_picture::fields('u');
-
         list($esql, $enrolledparams) = get_enrolled_sql($context);
 
-        $sql = "SELECT $ufields
+        $sql = "SELECT u.*
                 FROM {user} u
                 JOIN ($esql) je ON je.id = u.id
                 WHERE u.id = :userid";
@@ -264,8 +262,11 @@ class user {
         ];
 
         if (!empty($search)) {
-            $conditions = get_extra_user_fields($context);
-            foreach (get_all_user_name_fields() as $field) {
+            $fields = \core_user\fields::for_identity($context, false);
+            $conditions = $fields->get_required_fields();
+
+            $userfields = \core_user\fields::for_name();
+            foreach ($userfields->get_required_fields() as $field) {
                 $conditions[] = 'u.'.$field;
             }
 
@@ -285,14 +286,10 @@ class user {
 
         $wherecondition = implode(' AND ', $tests);
 
-        $extrafields = get_extra_user_fields($context, ['username', 'lastaccess']);
-        $extrafields[] = 'username';
-        $extrafields[] = 'lastaccess';
-        $extrafields[] = 'maildisplay';
+        $userfields = \core_user\fields::for_userpic();
+        $userpicfields = $userfields->get_sql('u', false, '', '', false);
 
-        $ufields = user_picture::fields('u', $extrafields);
-
-        return [$ufields, $params, $wherecondition];
+        return [$userpicfields->selects, $params, $wherecondition];
     }
 
     /**
