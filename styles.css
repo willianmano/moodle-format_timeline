@@ -68,10 +68,10 @@
 /* Timeline posts. */
 .format-timeline .discuss {
     margin-top: 1rem;
-    border-style: dashed;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
+    border: 1px solid #d7dfe3;
 }
 
 .format-timeline .discuss .post,
@@ -313,9 +313,18 @@
     padding-left: 0;
 }
 
-.format-timeline div.timeline ul.section .activity {
-    margin: 1rem 0 0 0;
-    padding: .5rem 1rem;
+.format-timeline div.timeline ul.section .coursemodule {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem;
+}
+
+.format-timeline div.timeline ul.section .coursemodule .activity {
+    flex: 1;
+}
+
+.format-timeline div.timeline ul.section .coursemodule {
+    padding: 1rem;
     border: 1px solid #d7dfe3;
     border-left: 4px solid #1177d1;
     -webkit-border-radius: 4px;
@@ -323,48 +332,52 @@
     border-radius: 4px;
 }
 
-.format-timeline div.timeline ul.section .activity.modtype_book,
-.format-timeline div.timeline ul.section .activity.modtype_resource,
-.format-timeline div.timeline ul.section .activity.modtype_folder,
-.format-timeline div.timeline ul.section .activity.modtype_imscp,
-.format-timeline div.timeline ul.section .activity.modtype_page,
-.format-timeline div.timeline ul.section .activity.modtype_url {
-    border-left: 4px solid #343a40;
+.format-timeline div.timeline ul.section .coursemodule.hiddenactivity {
+    background-color: #f8f9fa;
 }
 
-.format-timeline div.timeline ul.section .activity.modtype_label {
-    border: 1px solid #d7dfe3;
-    position: relative;
-}
-
-.format-timeline div.timeline ul.section .activity.ishidden {
-    border-left: 4px solid #868e96;
-    background-color: rgba(0, 0, 0, .05);
-}
-
-.format-timeline div.timeline ul.section .activity.ishidden a {
-    color: #868e96;
-}
-
-.format-timeline div.timeline ul.section .activity.ishidden .activityicon {
-    opacity: .5;
-}
-
-.format-timeline div.timeline ul.section .activity .activity-header {
-    display: flex;
-    flex-direction: row;
+.format-timeline div.timeline .activity-item,
+.format-timeline div.timeline .activity.label.activity-wrapper {
+    border: none;
     padding: 0;
 }
 
-.format-timeline div.timeline ul.section .activity .activity-header .activity-info {
-    flex: 1;
-    align-self: flex-start;
-    position: relative;
-    display: block;
+.format-timeline.editing div.timeline ul.section .coursemodule .activity .activity-item:hover {
+    cursor: default;
+    background-color: initial;
 }
 
-.format-timeline div.timeline ul.section .activity .activity-header .activity-info .activity-name {
-    margin-bottom: 0;
+.format-timeline div.timeline ul.section .coursemodule {
+    border-left: 4px solid #343a40;
+}
+
+.format-timeline div.timeline ul.section .coursemodule.purpose_administration {
+    border-left: 4px solid #5d63f6;
+}
+
+.format-timeline div.timeline ul.section .coursemodule.purpose_assessment {
+    border-left: 4px solid #eb66a2;
+}
+
+.format-timeline div.timeline ul.section .coursemodule.purpose_collaboration {
+    border-left: 4px solid #f7634d;
+}
+
+.format-timeline div.timeline ul.section .coursemodule.purpose_communication {
+    border-left: 4px solid #11a676;
+}
+
+.format-timeline div.timeline ul.section .coursemodule.purpose_content {
+    border-left: 4px solid #399be2;
+}
+
+.format-timeline div.timeline ul.section .coursemodule.purpose_interface {
+    border-left: 4px solid #a378ff;
+}
+
+.format-timeline div.timeline ul.section .coursemodule.modtype_label {
+    border: 1px solid #d7dfe3;
+    position: relative;
 }
 
 .format-timeline div.timeline ul.section .activity .activity-header .activity-info .activity-timecreated {
@@ -373,51 +386,17 @@
     margin-bottom: .5rem;
 }
 
-.format-timeline div.timeline ul.section .activity .activity-header .editicons a {
-    text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
+.format-timeline div.timeline ul.section .coursemodule .editicons {
+    margin-left: .5rem;
 }
 
-.format-timeline div.timeline ul.section .activity .activity-header .editicons a .icon {
-    margin-right: .5rem;
+.format-timeline div.timeline ul.section .editicons a {
+    text-decoration: none !important;
 }
 
-.format-timeline div.timeline ul.section .activity .activity-header .editicons .action-menu-item {
+.format-timeline div.timeline ul.section .coursemodule .activity .editing_move,
+.format-timeline div.timeline ul.section .coursemodule .activity .activity-actions {
     display: none;
-}
-
-.format-timeline div.timeline ul.section .activity img.activityicon {
-    height: 48px;
-    width: 48px;
-    vertical-align: middle;
-    margin-right: 1rem;
-}
-
-.format-timeline div.timeline ul.section .activity .actions img.icon {
-    margin-right: 0;
-}
-
-.format-timeline div.timeline ul.section .activity .availabilityinfo {
-    margin-left: 0;
-    border-top: 1px solid #d7dfe3;
-    padding-top: 1rem;
-}
-
-.format-timeline div.timeline ul.section .activity .availabilityinfo ul {
-    margin-left: 1rem;
-}
-
-.format-timeline div.timeline ul.section .activity .metahtml {
-    padding: 1rem 0;
-    border-top: 1px solid #d7dfe3;
-    margin-top: 1rem;
-}
-
-.format-timeline div.timeline ul.section .activity .metahtml .badge {
-    color: #fff;
-}
-
-.format-timeline div.timeline ul.section .activity .metahtml p {
-    margin-bottom: 0;
 }
 
 /* Mentions */

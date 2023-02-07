@@ -66,6 +66,7 @@ class posts {
         }
 
         foreach ($posts as $key => $post) {
+            $posts[$key]->message = format_text($post->message);
             $posts[$key]->humantimecreated = userdate($post->timecreated);
 
             $children = self::get_post_children($post->pid, $limit);

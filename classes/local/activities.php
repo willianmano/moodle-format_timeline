@@ -32,6 +32,7 @@ use action_menu;
 use action_menu_link;
 use action_link;
 use pix_icon;
+use core_courseformat\output\local\content\cm\availability;
 
 /**
  * Activities class
@@ -52,14 +53,13 @@ class activities {
      * @throws \moodle_exception
      */
     public static function get_course_activities($course, $courserenderer) {
-        $modinfo = get_fast_modinfo($course);
+        $courseformat = course_get_format($course);
+
+        $modinfo = $courseformat->get_modinfo();
 
         $section = $modinfo->get_section_info(0);
 
         $coursemodules = [];
-
-        $completioninfo = new completion_info($course);
-
         if (!empty($modinfo->sections[$section->section])) {
             foreach ($modinfo->sections[$section->section] as $modnumber) {
                 $mod = $modinfo->cms[$modnumber];
@@ -72,9 +72,11 @@ class activities {
                 $editicons = self::course_section_cm_edit_actions($editactions, $courserenderer, $mod);
                 $editicons .= $mod->afterediticons;
 
-                $availability = $courserenderer->course_section_cm_availability($mod);
+                $cmitemclass = $courseformat->get_output_classname('content\\section\\cmitem');
+                $cmitem = new $cmitemclass($courseformat, $section, $mod);
+                $moduleoutput = $courserenderer->render($cmitem);
 
-                $coursemodules[] = new modinfo($mod, $editicons, $availability);
+                $coursemodules[] = new modinfo($mod, $moduleoutput, $editicons);
             }
         }
 
@@ -110,7 +112,6 @@ class activities {
         $menu = new action_menu();
         $menu->set_owner_selector($ownerselector);
         $menu->set_constraint('.course-content');
-        $menu->set_alignment(action_menu::TR, action_menu::BR);
         $menu->set_menu_trigger($courserenderer->render($icon));
 
         foreach ($actions as $action) {

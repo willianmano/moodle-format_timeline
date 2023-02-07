@@ -262,11 +262,19 @@ class timeline implements templatable, renderable {
         if (isset($this->viewoptions['order']) && $this->viewoptions['order'] == 'desc') {
             // Ordem decrescente.
             usort($timelineitems, function($a, $b) {
-                return $a->timecreated > $b->timecreated;
+                if ($a->timecreated == $b->timecreated) {
+                    return 0;
+                }
+
+                return ($a->timecreated < $b->timecreated) ? -1 : 1;
             });
         } else {
             usort($timelineitems, function($a, $b) {
-                return $a->timecreated < $b->timecreated;
+                if ($a->timecreated == $b->timecreated) {
+                    return 0;
+                }
+
+                return ($a->timecreated > $b->timecreated) ? -1 : 1;
             });
         }
 

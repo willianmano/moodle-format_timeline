@@ -35,47 +35,11 @@
         "availability": "<div>...</div>"
     }
 }}
-{{#printcontent}}
-    <div class="{{type}} modtype_{{modname}} {{^visible}}ishidden{{/visible}}">
-        {{{content}}}
 
-        <div class="actions">
-            {{{editicons}}}
-        </div>
+<div class="shadow-sm coursemodule modtype_{{modname}} purpose_{{purpose}} {{^visible}}hiddenactivity{{/visible}}">
+    {{{ moduleoutput }}}
+
+    <div class="editicons">
+        {{{editicons}}}
     </div>
-{{/printcontent}}
-{{^printcontent}}
-    <li class="shadow-sm {{type}} {{modname}} modtype_{{modname}} {{^visible}}ishidden{{/visible}}">
-        <div class="activity-header">
-            <div class="activity-info">
-                <p class="activity-name">{{modfullname}}</p>
-                <p class="activity-timecreated"><b>{{#str}}postedon, format_timeline{{/str}}</b> {{humantimecreated}}</p>
-            </div>
-
-            <div class="editicons">
-                {{{editicons}}}
-            </div>
-        </div>
-
-        <div>
-            <div class="activityinstance">
-                <a href="{{{url}}}">
-                    <img src="{{{iconurl}}}" class="iconlarge activityicon" role="presentation" aria-hidden="true">
-                    <span class="instancename">{{name}}</span>
-                </a>
-                {{#showintro}}
-                    <hr />
-                    {{{intro}}}
-                {{/showintro}}
-            </div>
-
-            {{{availability}}}
-        </div>
-
-        {{#activityinformation}}
-            <div class="metahtml">
-                {{{ activityinformation }}}
-            </div>
-        {{/activityinformation}}
-    </li>
-{{/printcontent}}
+</div>

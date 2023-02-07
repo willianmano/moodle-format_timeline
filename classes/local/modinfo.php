@@ -27,7 +27,6 @@ namespace format_timeline\local;
 defined('MOODLE_INTERNAL') || die();
 
 use cm_info;
-use moodle_url;
 
 /**
  * Mod info class
@@ -36,50 +35,20 @@ use moodle_url;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class modinfo {
-    /** @var int Curse module ID. */
-    public $cmid;
-    /** @var int The module instance. */
-    public $instanceid;
-    /** @var string The instance name. */
-    public $name;
-    /** @var string Module type. */
-    public $type = 'activity';
+    /** @var string The course module html output. */
+    public $moduleoutput;
+    /** @var string The activity edit icons. */
+    public $editicons;
     /** @var string Module name. */
     public $modname;
-    /** @var string Module fullname. */
-    public $modfullname;
-    /** @var string Module URL. */
-    public $url;
-    /** @var string Icon URL. */
-    public $iconurl;
     /** @var boolean Course module visibility. */
     public $visible;
+    /** @var string Module purpose. */
+    public $purpose;
     /** @var string Time created for humans. */
     public $humantimecreated;
     /** @var int Time created. */
     public $timecreated;
-    /** @var int Time modified. */
-    public $timemodified;
-    /** @var string Edit icons. */
-    public $editicons;
-    /** @var boolean Course module availability. */
-    public $availability;
-    /** @var boolean Course content is printable ex. label. */
-    public $printcontent = false;
-    /** @var string Content. */
-    public $content = null;
-    /** @var boolean Show intro. */
-    public $showintro = false;
-    /** @var string Intro content. */
-    public $intro = null;
-    /** @var string Status. */
-    public $activitystatus;
-    /** @var string Extra data. */
-    public $activitystatusextra;
-    /** @var string Submission status. */
-    public $activitysubmissionstatus;
-    /** @var string Activity info dates and status. */
-    public $activityinformation;
 
     /**
      * Constructor.
@@ -91,48 +60,19 @@ class modinfo {
      * @throws \dml_exception
      * @throws \moodle_exception
      */
-    public function __construct(cm_info $cminfo, $editicons = null, $availability = null) {
+    public function __construct($mod, $moduleoutput, $editicons = null) {
+        $this->moduleoutput = $moduleoutput;
+
         $this->editicons = $editicons;
-        $this->availability = $availability;
-        $this->get_module_metadata($cminfo);
-    }
 
-    /**
-     * Get coure module medatada
-     *
-     * @param cm_info $cminfo
-     *
-     * @throws \dml_exception
-     * @throws \moodle_exception
-     */
-    public function get_module_metadata(cm_info $cminfo) {
-        global $DB, $USER, $OUTPUT;
+        $this->modname = $mod->modname;
 
-        $moddb = $DB->get_record($cminfo->modname, ['id' => $cminfo->instance], '*', MUST_EXIST);
+        $this->visible = (bool) $mod->visible;
 
-        $this->cmid = $cminfo->id;
-        $this->instanceid = $cminfo->instance;
-        $this->name = $cminfo->name;
-        $this->modname = $cminfo->modname;
-        $this->modfullname = $cminfo->modfullname->out();
-        $this->url = new moodle_url('/mod/' . $this->modname . '/view.php', ['id' => $this->cmid]);
-        $this->iconurl = $cminfo->get_icon_url();
-        $this->visible = $cminfo->visible;
-        $this->humantimecreated = userdate($cminfo->added);
-        $this->timecreated = $cminfo->added;
-        $this->timemodified = $moddb->timemodified;
-        $this->showintro = $cminfo->showdescription;
-        $this->intro = $cminfo->get_formatted_content();
+        $this->purpose = plugin_supports('mod', $mod->modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
 
-        if ($this->modname == 'label') {
-            $this->printcontent = true;
-            $this->content = $cminfo->get_formatted_content(['overflowdiv' => true, 'noclean' => true]);
-        }
+        $this->timecreated = $mod->added;
 
-        $completiondetails = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id);
-        $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
-        $activityinformation = $OUTPUT->activity_information($cminfo, $completiondetails, $activitydates);
-
-        $this->activityinformation = $activityinformation;
+        $this->humantimecreated = userdate($mod->added);
     }
 }
