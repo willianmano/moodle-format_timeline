@@ -45,8 +45,6 @@ class modinfo {
     public $visible;
     /** @var string Module purpose. */
     public $purpose;
-    /** @var string Time created for humans. */
-    public $humantimecreated;
     /** @var int Time created. */
     public $timecreated;
 
@@ -72,7 +70,5 @@ class modinfo {
         $this->purpose = plugin_supports('mod', $mod->modname, FEATURE_MOD_PURPOSE, MOD_PURPOSE_OTHER);
 
         $this->timecreated = $mod->added;
-
-        $this->humantimecreated = userdate($mod->added);
     }
 }
