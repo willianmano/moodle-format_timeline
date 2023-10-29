@@ -27,7 +27,7 @@ namespace format_timeline\local;
 defined('MOODLE_INTERNAL') || die();
 
 use user_picture;
-use context_course;
+use core\context\course as context_course;
 
 /**
  * User info class

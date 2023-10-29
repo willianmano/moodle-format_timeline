@@ -26,13 +26,11 @@ namespace format_timeline\local;
 
 defined('MOODLE_INTERNAL') || die();
 
-use completion_info;
 use cm_info;
 use action_menu;
 use action_menu_link;
 use action_link;
 use pix_icon;
-use core_courseformat\output\local\content\cm\availability;
 
 /**
  * Activities class

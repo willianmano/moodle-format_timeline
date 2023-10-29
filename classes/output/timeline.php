@@ -31,7 +31,7 @@ use format_timeline\local\user;
 use templatable;
 use renderable;
 use renderer_base;
-use context_course;
+use core\context\course as context_course;
 use html_writer;
 use moodle_page;
 

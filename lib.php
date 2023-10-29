@@ -58,7 +58,7 @@ class format_timeline extends core_courseformat\base {
 
         if ((string)$section->name !== '') {
             return format_string($section->name, true,
-                array('context' => context_course::instance($this->courseid)));
+                array('context' => core\context\course::instance($this->courseid)));
         } else {
             return $this->get_default_section_name($section);
         }
@@ -158,7 +158,7 @@ function format_timeline_output_fragment_createpost_form($args) {
 
     list($ignored, $course) = get_context_info_array($context->id);
 
-    $mform = new \format_timeline\local\forms\createpost_form($formdata, ['courseid' => $course->id]);
+    $mform = new format_timeline\local\forms\createpost_form($formdata, ['courseid' => $course->id]);
 
     if (!empty($args->jsonformdata)) {
         // If we were passed non-empty form data we want the mform to call validation functions and show errors.

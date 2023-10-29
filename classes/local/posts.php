@@ -24,8 +24,7 @@
 
 namespace format_timeline\local;
 
-use context_course;
-use format_timeline\local\user;
+use core\context\course as context_course;
 
 defined('MOODLE_INTERNAL') || die();
 

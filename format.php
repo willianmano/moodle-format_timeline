@@ -30,7 +30,7 @@ require_once($CFG->libdir.'/completionlib.php');
 $order = optional_param('order', null, PARAM_TEXT);
 $filter = optional_param('filter', null, PARAM_TEXT);
 
-$context = context_course::instance($course->id);
+$context = core\context\course::instance($course->id);
 // Retrieve course format option fields and add them to the $course object.
 $course = course_get_format($course)->get_course();
 

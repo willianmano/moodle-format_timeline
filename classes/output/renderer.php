@@ -26,8 +26,8 @@ namespace format_timeline\output;
 
 defined('MOODLE_INTERNAL') || die();
 
-use plugin_renderer_base;
-use renderable;
+use core_courseformat\output\section_renderer;
+use moodle_page;
 
 /**
  * Renderer for the timeline format
@@ -35,6 +35,6 @@ use renderable;
  * @copyright  2020 onwards Willian Mano {@link https://conecti.me}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class renderer extends plugin_renderer_base {
+class renderer extends section_renderer {
 
 }

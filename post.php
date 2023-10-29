@@ -40,7 +40,7 @@ if (!$canview) {
 
 $course = $DB->get_record('course', ['id' => $post->courseid], '*', MUST_EXIST);
 
-$context = context_course::instance($course->id);
+$context = core\context\course::instance($course->id);
 
 $coursename = format_string($course->fullname, true, ['context' => $context]);
 
